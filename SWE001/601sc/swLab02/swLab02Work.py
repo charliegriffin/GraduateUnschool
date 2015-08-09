@@ -30,7 +30,7 @@ def runTestsDelay():
     [m.getNextValues(m.state, i) for i in [-1,-2,-3,-4,-5,-6]]
     print 'Test4:', [m.step(i) for i in [1,0,2,0,0,3,0,0,0,4]]
 
-runTestsDelay()
+# runTestsDelay()
 # execute runTestsDelay() to carry out the testing, you should get:
 #Test1: [100, 10, 1, 0, 2, 0, 0, 3, 0, 0]
 #Test2: [10, 100, 0, 0, 0, 0, 0]
@@ -53,12 +53,20 @@ def f(x):  # func
      return 'foo' '''
 
 
-class CommentsSM(sm.SM):
-    startState = ''  # fix this
-
+class CommentsSM(sm.SM):	# This works just like the turnstyle in 2.1.2
+    startState = 'off'  
     def getNextValues(self, state, inp):
-        # your code here
-        pass
+		if state == 'off':
+			if inp == '#':
+				return('on',inp)	# its on so start reading
+			else:
+				return('off',None)	# its off so stop reading
+		if state == "on":
+			if inp == '\n':
+				return('off',None)
+			else:
+				return('on',inp)
+
  
 
 def runTestsComm():
@@ -73,7 +81,7 @@ def runTestsComm():
     print 'Test3:', [c for c in [m.step(i) for i in x2] if not c==None]
 
 # execute runTestsComm() to carry out the testing, you should get:
-
+runTestsComm()
 #Test1: ['#', ' ', 'f', 'u', 'n', 'c', '#', ' ', 't', 'e', 's', 't', '#', ' ', 'c', 'o', 'm', 'm', 'e', 'n', 't']
 #Test2: ['#', 'i', 'n', 'i', 't', 'i', 'a', 'l', ' ', 'c', 'o', 'm', 'm', 'e', 'n', 't', '#', ' ', 'f', 'u', 'n', 'c', '#', ' ', 't', 'e', 's', 't', '#', ' ', 'c', 'o', 'm', 'm', 'e', 'n', 't']
 #Test3: ['#', 'i', 'n', 'i', 't', 'i', 'a', 'l', ' ', 'c', 'o', 'm', 'm', 'e', 'n', 't', '#', ' ', 'f', 'u', 'n', 'c', '#', ' ', 't', 'e', 's', 't', '#', ' ', 'c', 'o', 'm', 'm', 'e', 'n', 't']
