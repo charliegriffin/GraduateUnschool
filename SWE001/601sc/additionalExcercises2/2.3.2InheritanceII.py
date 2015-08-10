@@ -14,9 +14,7 @@ class AccountPounds(AccountDollars):
 	def __init__(self,initialBalance):
 		AccountDollars.__init__(self, 2.*initialBalance)	# here I convert pounds to dollars
 	def depositPounds(self,depositAmount):
-		depositAmount = 2.*depositAmount	# for simplicity we are keeping it in dollars in memory
-		self.Balance = self.Balance*(1.+self.interestRate) - self.fee + depositAmount
-		return self.Balance/2.	# converting back to pounds
+		return self.depositDollars(2.*depositAmount)/2.	# converting back to pounds
 
 x = AccountPounds(100)
 print x.depositPounds(150)
