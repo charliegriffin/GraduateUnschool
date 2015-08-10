@@ -72,8 +72,21 @@ def tokenize(string):
 # or one of the subclasses of {\tt BinaryOp} 
 def parse(tokens):
     def parseExp(index):
-        # <your code here>
-        pass
+        if numberTok(tokens[index]):	# number
+        	return (Number(float(tokens[index])), index + 1)
+        elif variableTok(tokens[index]):	# variable
+        	return (Variable(str(tokens[index])), index + 1)
+        elif tokens[index] == '(':
+        	leftTree = parseExp(index + 1)
+        	print "leftTree = ", leftTree
+        	op = tokens[leftTree[1]]
+        	print "op = ", op
+        	rightTree = parseExp(leftTree[1]+1)
+        	print "rightTree =", rightTree	# everything is working fine, I now need
+        									# to figure out what to return
+#        	return (parseExp(leftTree op rightTree), rightTree[1])
+        else:
+        	print tokens[index]  
     (parsedExp, nextIndex) = parseExp(0)
     return parsedExp
 
@@ -134,7 +147,7 @@ def testTokenize():
     print tokenize('(hi*ho)')
     print tokenize('( fred+george )')
 
-testTokenize()
+#testTokenize()
 # Simple parsing tests from the handout
 '''Answers are:
 Var(a)
@@ -152,6 +165,7 @@ def testParse():
     print parse(tokenize('((a * b) / (cee - doh))'))
     print parse(tokenize('(a = (3 * 5))'))
 
+testParse()
 ####################################################################
 # Test cases for EAGER evaluator
 ####################################################################
