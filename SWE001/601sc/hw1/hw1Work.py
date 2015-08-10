@@ -52,10 +52,10 @@ def tokenize(string):
     newToken = ''
     for character in string:
     	if character in seps:
-    		tokenList.append(character)
     		if newToken != '':	# adds string made before this char
     			tokenList.append(newToken)
     			newToken = ''
+    		tokenList.append(character)
     	elif character == ' ':	# separates spaced strings
     		if newToken !='':
     			tokenList.append(newToken)
@@ -78,15 +78,22 @@ def parse(tokens):
         	return (Variable(str(tokens[index])), index + 1)
         elif tokens[index] == '(':
         	leftTree = parseExp(index + 1)
-        	print "leftTree = ", leftTree
+#         	print "leftTree = ", leftTree
         	op = tokens[leftTree[1]]
-        	print "op = ", op
+#         	print "op = ", op
         	rightTree = parseExp(leftTree[1]+1)
-        	print "rightTree =", rightTree	# everything is working fine, I now need
-        									# to figure out what to return
-#        	return (parseExp(leftTree op rightTree), rightTree[1])
-        else:
-        	print tokens[index]  
+#         	print "rightTree =", rightTree
+#        	print tokens[rightTree[1]+1]
+        	if op == '+':
+        		return (Sum(leftTree[0],rightTree[0]),rightTree[1]+1)
+        	elif op == '*':
+        		return (Prod(leftTree[0],rightTree[0]),rightTree[1]+1)
+        	elif op == '-':
+        		return (Diff(leftTree[0],rightTree[0]),rightTree[1]+1)
+        	elif op == '/':
+        		return (Quot(leftTree[0],rightTree[0]),rightTree[1]+1)
+        	elif op == '=':
+        		return (Assign(leftTree[0],rightTree[0]),rightTree[1]+1)
     (parsedExp, nextIndex) = parseExp(0)
     return parsedExp
 
