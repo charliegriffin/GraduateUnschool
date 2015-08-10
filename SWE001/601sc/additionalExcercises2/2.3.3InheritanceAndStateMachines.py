@@ -21,14 +21,16 @@ class CountMod5(CountingStateMachine):
 # of AlternateZeros should be state machines for which, on even steps, the output
 # is the same as the input, and on odd steps, the output is 0.
 
+
+# It can't know the next state if the count is going to be even, since its the inp
 class AlternateZeros(CountingStateMachine):
+	def getNextValues(self,state,inp):
+		return (state + 1, self.getOutput(state,inp))	# the state is a simple count
 	def getOutput(self,state,inp):
 		if state%2 == 0:
-			state += 1
-			return 0
-		else:
-			state += 1
 			return inp
+		else:
+			return 0
 		
 list1 = [0,1,2,3,4,5,6,7,8,9]
 list2 = [0,2,0,4,0,6,0,8,0,10]
