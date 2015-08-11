@@ -93,12 +93,8 @@ def parse(tokens):
         	return (Variable(str(tokens[index])), index + 1)
         elif tokens[index] == '(':
         	leftTree = parseExp(index + 1)
-#         	print "leftTree = ", leftTree
         	op = tokens[leftTree[1]]
-#         	print "op = ", op
         	rightTree = parseExp(leftTree[1]+1)
-#         	print "rightTree =", rightTree
-#        	print tokens[rightTree[1]+1]
         	if op == '+':
         		return (Sum(leftTree[0],rightTree[0]),rightTree[1]+1)
         	elif op == '*':
@@ -145,7 +141,7 @@ def calcTest(exprs):
     env = {}
     for e in exprs:
         print '%', e                    # e is the experession 
-        print # your expression here
+        print parse(tokenize(e)).eval(env)
         print '   env =', env
 
 # Simple tokenizer tests
@@ -214,7 +210,7 @@ def testEval():
 # Assign(Variable('c'),Number(10.0)).eval(env)
 # print env
 # print Variable('c').eval(env), "Should be 10.0"
-testEval()
+# testEval()
 
 # Basic calculator test cases (see handout)
 testExprs = ['(2 + 5)',
@@ -223,7 +219,7 @@ testExprs = ['(2 + 5)',
              '(w = (z + 1))',
              'w'
              ]
-# calcTest(testExprs)
+calcTest(testExprs)
 
 ####################################################################
 # Test cases for LAZY evaluator
