@@ -257,7 +257,7 @@ def testLazyEval():
     env['c'] = Number(4.0)
     print Variable('a').eval(env)
 
-testLazyEval()
+#testLazyEval()
 # Lazy partial eval test cases (see handout)
 lazyTestExprs = ['(a = (b + c))',
                   '(b = ((d * e) / 2))',
@@ -281,4 +281,4 @@ partialTestExprs = ['(z = (y + w))',
                     '(w = 100)',
                     'z']
 
-# calcTest(partialTestExprs)
+calcTest(partialTestExprs)
