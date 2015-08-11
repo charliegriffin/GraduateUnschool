@@ -16,18 +16,28 @@ class BinaryOp:
 
 class Sum(BinaryOp):
     opStr = 'Sum'
+    def eval(self,env):
+		return self.left.eval(env) + self.right.eval(env)
 
 class Prod(BinaryOp):
     opStr = 'Prod'
+    def eval(self,env):
+		return self.left.eval(env) * self.right.eval(env)
 
 class Quot(BinaryOp):
     opStr = 'Quot'
+    def eval(self,env):
+		return self.left.eval(env) / self.right.eval(env)
 
 class Diff(BinaryOp):
     opStr = 'Diff'
+    def eval(self,env):
+    	return self.left.eval(env) - self.right.eval(env)
 
 class Assign(BinaryOp):
     opStr = 'Assign'
+    def eval(self,env):
+		env[self.left.name] = float(self.right.eval(env))
         
 class Number:
     def __init__(self, val):
@@ -35,6 +45,8 @@ class Number:
     def __str__(self):
         return 'Num('+str(self.value)+')'
     __repr__ = __str__
+    def eval(self,env):
+    	return float(self.value)
 
 class Variable:
     def __init__(self, name):
@@ -42,6 +54,9 @@ class Variable:
     def __str__(self):
         return 'Var('+self.name+')'
     __repr__ = __str__
+    def eval(self,env):
+    	return float(env[self.name])
+
 
 # characters that are single-character tokens
 seps = ['(', ')', '+', '-', '*', '/', '=']
@@ -172,7 +187,7 @@ def testParse():
     print parse(tokenize('((a * b) / (cee - doh))'))
     print parse(tokenize('(a = (3 * 5))'))
 
-testParse()
+# testParse()
 ####################################################################
 # Test cases for EAGER evaluator
 ####################################################################
@@ -180,16 +195,26 @@ testParse()
 def testEval():
     env = {}
     Assign(Variable('a'), Number(5.0)).eval(env)
-    print Variable('a').eval(env)
+    print Variable('a').eval(env), "= 5.0"
     env['b'] = 2.0
-    print Variable('b').eval(env)
+    print Variable('b').eval(env), "= 2.0"
     env['c'] = 4.0
-    print Variable('c').eval(env)
-    print Sum(Variable('a'), Variable('b')).eval(env)
-    print Sum(Diff(Variable('a'), Variable('c')), Variable('b')).eval(env)
+    print Variable('c').eval(env), "= 4.0"
+    print Sum(Variable('a'), Variable('b')).eval(env),"= 7.0"
+    print Sum(Diff(Variable('a'), Variable('c')), Variable('b')).eval(env), "= 3.0"
     Assign(Variable('a'), Sum(Variable('a'), Variable('b'))).eval(env)
-    print Variable('a').eval(env)
-    print env
+    print Variable('a').eval(env), "= 7.0"
+    print env, "= {'a':7.0, 'b':2.0, 'c':4.0}"
+
+# test as described in the pdf
+# env = {}
+# print Number(6.0).eval(env), "Should be 6.0"
+# env['a'] = 5.0
+# print Variable('a').eval(env), "Should be 5.0"
+# Assign(Variable('c'),Number(10.0)).eval(env)
+# print env
+# print Variable('c').eval(env), "Should be 10.0"
+testEval()
 
 # Basic calculator test cases (see handout)
 testExprs = ['(2 + 5)',
