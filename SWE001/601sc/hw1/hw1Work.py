@@ -3,6 +3,8 @@ import lib601.sm as sm
 import string
 import operator
 
+# I chose to do the lazy evaluation option
+
 class BinaryOp:
     def __init__(self, left, right):
         self.left = left
@@ -16,28 +18,40 @@ class BinaryOp:
 
 class Sum(BinaryOp):
     opStr = 'Sum'
-    def eval(self,env):
-		return self.left.eval(env) + self.right.eval(env)
+    def eval(self,env):	# if arguments are numbers, returns the sum
+		if type(self.left.eval(env)) == type(self.right.eval(env)) == float:
+			return self.left.eval(env) + self.right.eval(env)
+		else:			# returns a Sum operation of the right and left sides (evaluated)
+			return Sum(self.left.eval(env),self.right.eval(env))
 
 class Prod(BinaryOp):
     opStr = 'Prod'
     def eval(self,env):
-		return self.left.eval(env) * self.right.eval(env)
+    	if type(self.left.eval(env)) == type(self.right.eval(env)) == float: 
+    		return self.left.eval(env) * self.right.eval(env)	
+    	else:
+    		return Prod(self.left.eval(env),self.right.eval(env))
 
 class Quot(BinaryOp):
     opStr = 'Quot'
     def eval(self,env):
-		return self.left.eval(env) / self.right.eval(env)
+		if type(self.left.eval(env)) == type(self.right.eval(env)) == float:
+			return self.left.eval(env) / self.right.eval(env)
+		else:
+			return Quot(self.left.eval(env),self.right.eval(env))
 
 class Diff(BinaryOp):
     opStr = 'Diff'
     def eval(self,env):
-    	return self.left.eval(env) - self.right.eval(env)
+    	if type(self.left.eval(env)) == type(self.right.eval(env)) == float:
+    		return self.left.eval(env) - self.right.eval(env)
+    	else:
+    		return Diff(self.left.eval(env),self.right.eval(env))
 
 class Assign(BinaryOp):
     opStr = 'Assign'
     def eval(self,env):
-		env[self.left.name] = float(self.right.eval(env))
+		env[self.left.name] = self.right
         
 class Number:
     def __init__(self, val):
@@ -55,7 +69,10 @@ class Variable:
         return 'Var('+self.name+')'
     __repr__ = __str__
     def eval(self,env):
-    	return float(env[self.name])
+    	if self.name in env:
+    		return env[self.name].eval(env)
+    	else:
+    		return Variable(self.name)
 
 
 # characters that are single-character tokens
@@ -219,7 +236,7 @@ testExprs = ['(2 + 5)',
              '(w = (z + 1))',
              'w'
              ]
-calcTest(testExprs)
+# calcTest(testExprs)
 
 ####################################################################
 # Test cases for LAZY evaluator
@@ -240,6 +257,7 @@ def testLazyEval():
     env['c'] = Number(4.0)
     print Variable('a').eval(env)
 
+testLazyEval()
 # Lazy partial eval test cases (see handout)
 lazyTestExprs = ['(a = (b + c))',
                   '(b = ((d * e) / 2))',
