@@ -37,4 +37,13 @@ class CountUpTo(sm.SM):
 		return state >= self.endState
 
 m = CountUpTo(3)
-print m.run(n=20)	# runs the machine 20 times, or until termination
+# print m.run(n=20)	# runs the machine 20 times, or until termination
+
+# Part 4: Multiple Counting Machine
+def makeSequenceCounter(nums):
+	smSequence = []
+	for num in nums:
+		smSequence.append(CountUpTo(num))
+	return sm.Sequence(smSequence)
+	
+print makeSequenceCounter([2,5,3]).run(n=20)
