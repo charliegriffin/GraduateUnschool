@@ -18,5 +18,7 @@ from lib601.sig import *
 # They are all defined for you already
 
 # = 3.0 for t>= 3 and 0 otherwise
-step1 = Rn(ScaledSignal(StepSignal(),3),3)
-step1.plot(-5,5)
+step1 = Rn(ScaledSignal(StepSignal(),3),4)
+# step1.plot(-5,5)
+step2 = SummedSignal(Rn(step1,4),ConstantSignal(-3))
+# step2.plot(-10,10)
