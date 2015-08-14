@@ -216,3 +216,50 @@ class ConstantSignal(Signal):
 # Your code here
 ################
 
+class StepSignal(Signal):
+	def __init__(self):
+		""" straight forward"""
+	def sample(self,n):
+		if n < 0:
+			return 0
+		else:
+			return 1
+	def __str__(self):
+		return "StepSignal"
+		
+class SummedSignal(Signal):
+	def __init__(self,s1,s2):
+		self.s1 = s1
+		self.s2 = s2
+	def sample(self, n):
+		return self.s1.sample(n) + self.s2.sample(n)
+
+class ScaledSignal(Signal):
+	def __init__(self, s, c):
+		self.s = s
+		self.c = c
+	def sample(self, n):
+		return float(self.c)*float(self.s.sample(n))
+		
+class R(Signal):
+	def __init__(self, s):
+		self.s = s
+	def sample(self, n):
+		return self.s.sample(n-1)
+
+class Rn(Signal):
+	def __init__(self,s,k):
+		self.s = s
+		self.k = k
+	def sample(self,n):
+		return self.s.sample(n-self.k)
+		
+def PolyR(signal, polynomial):
+	signals = []
+	polynomial.reverse()
+	for i in range(len(polynomial)):	# make the list of signals to add
+		shifts.append(ScaledSignal(Rn(signal,i),polynomial[i]))
+	newSignal = ConstantSignal(0)
+	for signal in signals:				# add them to one compact signal
+		newSignal = SummedSignal(newSignal,signal)
+	return newSignal
