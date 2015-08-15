@@ -24,7 +24,7 @@ def dotProd(a,b):
 	
 class LTISM(sm.SM):
 	def __init__(self, dCoeffs, cCoeffs, previousInputs = [], previousOutputs = []):
-		self.cCoeffs = cCoeffs
+		self.cCoeffs = list(reversed(cCoeffs))
 		self.dCoeffs = list(reversed(dCoeffs))
 		self.j = len(self.dCoeffs)
 		self.k = len(self.cCoeffs)
@@ -34,13 +34,12 @@ class LTISM(sm.SM):
 		self.startState = (previousInputs,previousOutputs)
 	def getNextValues(self, state, input):
 		(inputs, outputs) = state
-# 		print "input = ", input
 		self.previousInputs.append(input)
-# 		print self.j
 		self.previousInputs = self.previousInputs[-self.j:]
 		self.previousOutputs = self.previousOutputs[-self.k:]
-# 		print self.previousInputs
 		output = dotProd(self.previousInputs,self.dCoeffs)
+		output += dotProd(self.previousOutputs,self.cCoeffs)
+		self.previousOutputs.append(output)
 		return ((self.previousInputs,self.previousOutputs),output)
 
 
@@ -50,6 +49,7 @@ a.transduce([1,2,3,4,5], verbose = True)
 b = LTISM([0,1],[],[0],[])
 b.transduce([1,2,3,4,5], verbose = True)
 
+
 	
-# m = LTISM([1,2],[1],[3],[4])
-# m.transduce([1,2,3,4,5], verbose = True)
+m = LTISM([1,2],[1],[3],[4])
+m.transduce([1,2,3,4,5], verbose = True)
