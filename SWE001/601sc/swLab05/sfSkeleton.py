@@ -7,28 +7,20 @@ import lib601.poly as poly
 import lib601.util as util
 
 
-class SystemFunction:
+class SystemFunction():
     """
     Represent a system function as a ratio of polynomials in R
     """
-	def __init__(self,numeratorPoly,denominatorPoly):
-		self.numerator = numeratorPoly
-		self.denominator = denominatorPoly
-
-	def poles(self):	# returns a list of the poles of the system.
-		solutions = []
-		return solutions
-	
-	def poleMagnitudes(self):	# returns a list of the magnitudes of the poles
-		poleMagnitudes = []
-		poles = self.poles()
-		for pole in poles:
-			poleMagnitudes.append(pole)
-		return poleMagnitudes
-		
-	def dominantPole(self):		# returns one of the poles with the greatest mag
-		poleMagnitudes = self.poleMagnitudes()
-		return util.argmax(poles,poleMagnitudes):
+    def __init__(self,numeratorPoly,denominatorPoly):
+    	self.numerator = numeratorPoly
+    	self.denominator = denominatorPoly	
+    def poles(self):	# returns a list of the poles
+    # the poles are the solutions to the poly in the denom
+    # where z = 1/R
+    	coeffsInZ = self.denominator.coeffs[:]
+    	coeffsInZ = list(reversed(coeffsInZ))
+    	polyInZ = poly.Polynomial(coeffsInZ)
+    	return polyInZ.roots()
 
     def __str__(self):
         return 'SF(' + self.numerator.__str__('R') + \
