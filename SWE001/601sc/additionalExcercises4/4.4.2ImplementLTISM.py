@@ -53,3 +53,4 @@ b.transduce([1,2,3,4,5], verbose = True)
 	
 m = LTISM([1,2],[1],[3],[4])
 m.transduce([1,2,3,4,5], verbose = True)
+print m.transduce([1,2,3,4,5])
