@@ -21,6 +21,17 @@ class SystemFunction():
     	coeffsInZ = list(reversed(coeffsInZ))
     	polyInZ = poly.Polynomial(coeffsInZ)
     	return polyInZ.roots()
+    def poleMagnitudes(self):
+    	poleMags = []
+    	poles = self.poles()
+    	for pole in poles:
+    		poleMags.append(abs(pole))
+    	return poleMags
+    def dominantPole(self):
+    	poles = self.poles()
+    	dominantPole = util.argmax(poles,abs)
+    	return dominantPole
+    	
 
     def __str__(self):
         return 'SF(' + self.numerator.__str__('R') + \
