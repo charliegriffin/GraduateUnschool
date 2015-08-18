@@ -41,7 +41,9 @@ class SystemFunction():
 
 
 def Cascade(sf1, sf2):
-    pass
+	cascadedNumerator = sf1.numerator*sf2.numerator
+	cascadedDenominator = sf1.denominator*sf2.denominator
+	return SystemFunction(cascadedNumerator,cascadedDenominator)
 
 def FeedbackSubtract(sf1, sf2=None):
     pass
