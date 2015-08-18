@@ -40,17 +40,14 @@ s2 = sf.SystemFunction(poly.Polynomial([1]),
 T = 0.1
 k = 2.0
 controller = sf.SystemFunction(poly.Polynomial([-k]), poly.Polynomial([1]))
-print controller
 plant = sf.SystemFunction(poly.Polynomial([-T, 0]), poly.Polynomial([-1, 1]))
-print plant
 controllerAndPlant = sf.Cascade(controller, plant)
-print controllerAndPlant
-# wire = sf.SystemFunction(poly.Polynomial([1]), poly.Polynomial([1]))
-# wall = sf.FeedbackSubtract(controllerAndPlant, wire)
-# print '----------------------------------------'
-# print 'controller:', controller
-# print 'plant:', plant
-# print 'controllerAndPlant:', controllerAndPlant
-# print 'wall:', wall
-# print 'wall.poles():', wall.poles()
-# print '----------------------------------------'
+wire = sf.SystemFunction(poly.Polynomial([1]), poly.Polynomial([1]))
+wall = sf.FeedbackSubtract(controllerAndPlant, wire)
+print '----------------------------------------'
+print 'controller:', controller
+print 'plant:', plant
+print 'controllerAndPlant:', controllerAndPlant
+print 'wall:', wall
+print 'wall.poles():', wall.poles()
+print '----------------------------------------'
