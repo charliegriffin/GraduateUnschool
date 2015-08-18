@@ -1,2 +1,2 @@
-Numerator: n_1/d_1
-Denominator: 1 + (n_1/d_1)*(n_2/d_2)
+Numerator: d_2*n_1
+Denominator: d_1*d_2 + n_1*n_2
