@@ -17,7 +17,10 @@ ce.addEquation(le.Equation([1.,1.,-1.],['i3','i6','i5'],0.))
 ce.addEquation(le.Equation([1.,-1.,-1.],['i1','i2','i3'],0.))
 print ce.solve()
 
-ce1 = circ.Circuit([
-    # Enter your circuit components here
-    ])
+ce1 = circ.Circuit([circ.VSrc(10,'e3','e0'),
+					circ.Resistor(100,'e3','e1'),
+					circ.Resistor(100,'e3','e2'),
+					circ.Resistor(100,'e1','e2'),
+					circ.Resistor(100,'e2','e0'),
+					circ.Resistor(10,'e1','e0')])
 print ce1.solve('e0')
