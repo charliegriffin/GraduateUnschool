@@ -169,7 +169,7 @@ class Resistor(Component):
         self.r = r
 
     def getEquation(self):
-    	return le.Equation([1.,-1.,-self.r],[self.n1,self.n2,self.current],0.)
+    	return le.Equation([1.,-1.,-1.*self.r],[self.n1,self.n2,self.current],0.)
 
 ################
 # Your code here
@@ -197,34 +197,30 @@ class OpAmp(Component):
         return [[self.current, self.nOut, +1]]
 
     def getEquation(self):
-
-################
-# Your code here
-################
+    	return le.Equation([self.K,-1.*self.K,-1.],[self.nPlus,self.nMinus,self.nOut],0.)
 
 
-        
 
 # Remove quotes to test the Resistor components
-'''
-div = Circuit([
-    VSrc(10, '10v', 'gnd'),
-    Resistor(1000, '10v', 'vo'),
-    Resistor(1000, 'vo', 'gnd'),
-    Resistor(10, 'vo', 'gnd')
-    ])
-print div.solve('gnd')
-'''
+
+# div = Circuit([
+#     VSrc(10, '10v', 'gnd'),
+#     Resistor(1000, '10v', 'vo'),
+#     Resistor(1000, 'vo', 'gnd'),
+#     Resistor(10, 'vo', 'gnd')
+#     ])
+# print div.solve('gnd')
+
 
 # Remove quotes to test the Resistor and OpAmp components
-'''    
-buf = Circuit([
-    VSrc(10, '10v', 'gnd'),
-    Resistor(1000, '10v', 'vo'),
-    Resistor(1000, 'vo', 'gnd'),
-    OpAmp('vo', 'v-', 'vb'),
-    Wire('vb', 'v-'),
-    Resistor(10, 'vb', 'gnd')
-    ])
-print buf.solve('gnd')
-'''
+   
+# buf = Circuit([
+#     VSrc(10, '10v', 'gnd'),
+#     Resistor(1000, '10v', 'vo'),
+#     Resistor(1000, 'vo', 'gnd'),
+#     OpAmp('vo', 'v-', 'vb'),
+#     Wire('vb', 'v-'),
+#     Resistor(10, 'vb', 'gnd')
+#     ])
+# print buf.solve('gnd')
+

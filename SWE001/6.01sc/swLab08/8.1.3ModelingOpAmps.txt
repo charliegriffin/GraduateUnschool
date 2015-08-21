@@ -1,0 +1,17 @@
+Part 1: Op-Amp Constraint
+
+k*n1 - k*n2 - 1*n3 = 0.
+
+Part 2: Op-Amp Currents
+
+1. i1 is equal to zero
+So, for simplicity, we can
+not include i1 in any equation
+
+2. i2 is equal to zero
+So, for simplicity, we can
+not include i2 in any equation
+
+3. i3 is unconstrained by the op-amp
+So, for simplicity, we can
+only include i3 in KCL equation at n3
