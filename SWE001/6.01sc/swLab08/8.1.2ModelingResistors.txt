@@ -1,0 +1,4 @@
+Part 1:  Resistor constraint
+1. 1*n1 * -1*n2 + -r*i = 0
+
+e = le.Equation([1.,-1.,-1000.],['n1','n2','i'],0.)

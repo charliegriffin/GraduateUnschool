@@ -169,6 +169,7 @@ class Resistor(Component):
         self.r = r
 
     def getEquation(self):
+    	return le.Equation([1.,-1.,-self.r],[self.n1,self.n2,self.current],0.)
 
 ################
 # Your code here
