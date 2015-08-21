@@ -45,29 +45,47 @@ class NodeToCurrents:
     nodes in a circuit.
     """
     def __init__(self):
-
-################
-# Your code here
-################
+		self.d = {}
 
     def addCurrent(self, current, node, sign):
-
-################
-# Your code here
-################
+		# adds the new current with appropriate sign to node
+		if node not in self.d.keys():
+			self.d[node] = [(current,sign)]
+		else:
+			self.d[node].append((current,sign))
 
     def addCurrents(self, currents):
-
-################
-# Your code here
-################
+		# adds multiple currents at once, currents is a list of dim(3) tuples
+		for current in currents:
+			self.addCurrent(current[0],current[1],current[2])
 
     def getKCLEquations(self, gnd):
+		# returns a list of equations one for each node
+		equationsList = []
+		equationsList.append(le.Equation([1.],[gnd],0.0))
+		for node in self.d.keys():
+			if node != gnd:
+				currentList = []
+				signList = []
+				for i in range(len(self.d[node])):
+					currentList.append(self.d[node][i][0])
+					signList.append(float(self.d[node][i][1]))
+				equationsList.append(le.Equation(signList,currentList,0.))
+		# for the ground node, it just asserts that its voltage is zero.
+		# for the other nodes, the equation asserts that the sum of the currents going into
+		# and out of the nodes is 0
+		return equationsList
 
-################
-# Your code here
-################
-
+# I am testing this using the basic parallel resistor from 6.4.5.2
+# n = NodeToCurrents()
+# n.addCurrent('ib','n1',1)
+# n.addCurrent('ia','n1',1)
+# n.addCurrent('ic','n1',-1)
+# n.addCurrent('ib','n2',-1)
+# n.addCurrent('ia','n2',-1)
+# n.addCurrent('ic','n2',1)
+# print n.getKCLEquations('n2')
+# update: it worked
 
 class Component:
     """
@@ -171,9 +189,6 @@ class Resistor(Component):
     def getEquation(self):
     	return le.Equation([1.,-1.,-1.*self.r],[self.n1,self.n2,self.current],0.)
 
-################
-# Your code here
-################
 
 class OpAmp(Component):
 
@@ -203,24 +218,24 @@ class OpAmp(Component):
 
 # Remove quotes to test the Resistor components
 
-# div = Circuit([
-#     VSrc(10, '10v', 'gnd'),
-#     Resistor(1000, '10v', 'vo'),
-#     Resistor(1000, 'vo', 'gnd'),
-#     Resistor(10, 'vo', 'gnd')
-#     ])
-# print div.solve('gnd')
+div = Circuit([
+    VSrc(10, '10v', 'gnd'),
+    Resistor(1000, '10v', 'vo'),
+    Resistor(1000, 'vo', 'gnd'),
+    Resistor(10, 'vo', 'gnd')
+    ])
+print div.solve('gnd')
 
 
 # Remove quotes to test the Resistor and OpAmp components
    
-# buf = Circuit([
-#     VSrc(10, '10v', 'gnd'),
-#     Resistor(1000, '10v', 'vo'),
-#     Resistor(1000, 'vo', 'gnd'),
-#     OpAmp('vo', 'v-', 'vb'),
-#     Wire('vb', 'v-'),
-#     Resistor(10, 'vb', 'gnd')
-#     ])
-# print buf.solve('gnd')
+buf = Circuit([
+    VSrc(10, '10v', 'gnd'),
+    Resistor(1000, '10v', 'vo'),
+    Resistor(1000, 'vo', 'gnd'),
+    OpAmp('vo', 'v-', 'vb'),
+    Wire('vb', 'v-'),
+    Resistor(10, 'vb', 'gnd')
+    ])
+print buf.solve('gnd')
 
