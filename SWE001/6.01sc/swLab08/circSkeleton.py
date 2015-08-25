@@ -226,7 +226,6 @@ div = Circuit([
     ])
 print div.solve('gnd')
 
-
 # Remove quotes to test the Resistor and OpAmp components
    
 buf = Circuit([
@@ -239,3 +238,6 @@ buf = Circuit([
     ])
 print buf.solve('gnd')
 
+new = Circuit([
+	VSrc(12,'Vb','gnd'),
+	Resistor(6,'Rth',
