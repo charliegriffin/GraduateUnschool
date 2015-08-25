@@ -93,6 +93,29 @@ bUpdate = DDist({'disease':1-joint.prob(('noDisease','posTest'))*Disease.prob('n
 totalProb = DDist({'posTest':Disease.prob('disease')*PTgD('disease').prob('posTest')+Disease.prob('noDisease')*PTgD('noDisease').prob('posTest'),
 'negTest':Disease.prob('disease')*PTgD('disease').prob('negTest')+Disease.prob('noDisease')*PTgD('noDisease').prob('negTest')})
 
+# 10.1.5 Where are you?
+floor = DDist({'f1':0.5,'f2':0.5})
+def RgF(floorValue):
+	if floorValue == 'f1':
+		return DDist({'r1':0.25,'r2':0.25,'r3':0.25,'r4':0.25})
+	elif floorValue == 'f2':
+		return DDist({'r1':0.1,'r2':0.1,'r3':0.1,'r4':0.7})
+	else:
+		raise Exception, 'invalid floor value'
+
+jointRoomFloor = DDist({'(f1,r1)':floor.prob('f1')*RgF('f1').prob('r1'),
+'(f1,r2)':floor.prob('f1')*RgF('f1').prob('r2'),
+'(f1,r3)':floor.prob('f1')*RgF('f1').prob('r3'),
+'(f1,r4)':floor.prob('f1')*RgF('f1').prob('r4'),
+'(f2,r1)':floor.prob('f2')*RgF('f2').prob('r1'),
+'(f2,r2)':floor.prob('f2')*RgF('f2').prob('r2'),
+'(f2,r3)':floor.prob('f2')*RgF('f2').prob('r3'),
+'(f2,r4)':floor.prob('f2')*RgF('f2').prob('r4')})
+
+pFloorRoom1 = DDist({'f1':RgF('f1').prob('r1')*floor.prob('f1')/(0.35/2.),
+'f2':RgF('f2').prob('r1')*floor.prob('f2')/(0.35/2.)})
+
+
 
 ######################################################################
 #   Utilities
