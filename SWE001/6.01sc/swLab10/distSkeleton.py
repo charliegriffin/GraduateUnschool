@@ -115,7 +115,26 @@ jointRoomFloor = DDist({'(f1,r1)':floor.prob('f1')*RgF('f1').prob('r1'),
 pFloorRoom1 = DDist({'f1':RgF('f1').prob('r1')*floor.prob('f1')/(0.35/2.),
 'f2':RgF('f2').prob('r1')*floor.prob('f2')/(0.35/2.)})
 
+# 10.1.6
+# Part 1: Creating a joint distribution
+def PTgD(val):
+	if val == 'disease':
+		return DDist({'posTest':0.9,'negTest':0.1})
+	else:
+		return DDist({'posTest':0.5,'negTest':0.5})
 
+disease = DDist({'disease':0.1,'noDisease':0.9})
+
+def JDist(PA, PBgA):
+	dict = {}
+	aCopy = PA.dictCopy()
+	for state in aCopy.keys():
+		jointDict = PBgA(state).dictCopy()
+		for result in jointDict.keys():
+			dict[(state,result)] = PA.prob(state)*PBgA(state).prob(result)
+	return dict
+
+print JDist(disease,PTgD)
 
 ######################################################################
 #   Utilities
