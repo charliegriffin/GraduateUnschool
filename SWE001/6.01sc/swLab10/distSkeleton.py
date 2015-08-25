@@ -82,6 +82,18 @@ joint = DDist({('noDisease','posTest'):Disease.prob('noDisease')*PTgD('noDisease
 jMarg = DDist({'posTest':joint.prob(('noDisease','posTest'))+joint.prob(('disease','posTest')),
 'negTest':joint.prob(('noDisease','negTest'))+joint.prob(('disease','negTest'))})
 
+
+# 10.1.4 Operations on Conditional Distributions
+# Part 1: Bayesian Update
+
+bUpdate = DDist({'disease':1-joint.prob(('noDisease','posTest'))*Disease.prob('noDisease')/PTgD('noDisease').prob('posTest'),
+'noDisease':joint.prob(('noDisease','posTest'))*Disease.prob('noDisease')/PTgD('noDisease').prob('posTest')})
+
+# Part 2: Total Probability
+totalProb = DDist({'posTest':Disease.prob('disease')*PTgD('disease').prob('posTest')+Disease.prob('noDisease')*PTgD('noDisease').prob('posTest'),
+'negTest':Disease.prob('disease')*PTgD('disease').prob('negTest')+Disease.prob('noDisease')*PTgD('noDisease').prob('negTest')})
+
+
 ######################################################################
 #   Utilities
 
