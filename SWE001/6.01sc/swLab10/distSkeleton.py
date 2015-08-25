@@ -67,8 +67,20 @@ def PTgD(diseaseValue):
 	elif diseaseValue == "noDisease":
 		return DDist({'posTest':0.05,'negTest':0.95})
 	else:
-		print "acceptable diseaseValues are disease or noDisease"
-		return None
+		raise Exception, 'invalid value for D'
+
+# 10.1.3 Joint distributions
+# Part 1: JDist example
+Disease = DDist({'disease':0.0001,'noDisease':0.9999})
+
+joint = DDist({('noDisease','posTest'):Disease.prob('noDisease')*PTgD('noDisease').prob('posTest'),
+('disease','posTest'):Disease.prob('disease')*PTgD('disease').prob('posTest'),
+('noDisease','negTest'):Disease.prob('noDisease')*PTgD('noDisease').prob('negTest'),
+('disease','negTest'):Disease.prob('disease')*PTgD('disease').prob('negTest')})
+
+# Part 2: JDist marginalization example
+jMarg = DDist({'posTest':joint.prob(('noDisease','posTest'))+joint.prob(('disease','posTest')),
+'negTest':joint.prob(('noDisease','negTest'))+joint.prob(('disease','negTest'))})
 
 ######################################################################
 #   Utilities
