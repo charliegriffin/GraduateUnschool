@@ -59,6 +59,17 @@ class DDist:
 # 10.1.1
 foo = DDist({'hi':0.6,'med':0.1,'lo':0.3})
 
+# 10.1.2
+
+def PTgD(diseaseValue):
+	if diseaseValue == 'disease':
+		return DDist({'posTest':0.98,'negTest':0.02})
+	elif diseaseValue == "noDisease":
+		return DDist({'posTest':0.05,'negTest':0.95})
+	else:
+		print "acceptable diseaseValues are disease or noDisease"
+		return None
+
 ######################################################################
 #   Utilities
 
