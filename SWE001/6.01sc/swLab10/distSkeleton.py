@@ -167,6 +167,13 @@ def bayesEvidence(PBgA, PA, b):	# returns P(A| B = b)
 bayesEvidence(PTgD,disease,'posTest')
 bayesEvidence(PTgD,disease,'negTest')
 
+# Part 2: Implement totalProbability
+
+def totalProbability(PBgA, PA):
+	return JDist(PA,PBgA).marginalizeOut(0)
+
+print totalProbability(PTgD,disease)
+
 ######################################################################
 #   Utilities
 
