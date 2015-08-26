@@ -49,7 +49,17 @@ class DDist:
 				value += self.prob((oldState,state))
 			newDict[state] = value
 		return DDist(newDict)
-
+	def conditionOnVar(self, index, value):
+		outDict = {}
+		nonNormalizedDict = {}
+		for state in self.d.keys():		# collect the conditioned states
+			if removeElt(state,abs(index-1)) == value:
+				nonNormalizedDict[state] = self.d[state]
+		normalizationCoefficient = sum(nonNormalizedDict.values())
+		for state in nonNormalizedDict:	# normalize them
+			outDict[state[abs(index-1)]] = nonNormalizedDict[state]/normalizationCoefficient
+		return DDist(outDict)
+		
 	def support(self):
 		return [k for k in self.d.keys() if self.prob(k) > 0]
 	def __repr__(self):
@@ -143,7 +153,10 @@ def JDist(PA, PBgA):
 
 
 # Part 2: Implement marginalization
-print JDist(disease,PTgD).marginalizeOut(0)
+JDist(disease,PTgD).marginalizeOut(0)
+
+# Part 3: Implement conditioning
+JDist(disease,PTgD).conditionOnVar(1,'posTest')
 
 ######################################################################
 #   Utilities
