@@ -8,53 +8,60 @@ import copy
 
 import lib601.util as util
 
+def removeElt(items, i):
+    """
+    non-destructively remove the element at index i from a list;
+    returns a copy;  if the result is a list of length 1, just return
+    the element  
+    """
+    result = items[:i] + items[i+1:]
+    if len(result) == 1:
+        return result[0]
+    else:
+        return result
+
 class DDist:
-    """
-    Discrete distribution represented as a dictionary.  Can be
-    sparse, in the sense that elements that are not explicitly
-    contained in the dictionary are assumed to have zero probability.
-    """
-    def __init__(self, dictionary):
-        self.d = dictionary
-        """ Dictionary whose keys are elements of the domain and values
-        are their probabilities. """
+	def __init__(self, dictionary):
+		self.d = dictionary
+	def dictCopy(self):
+		return self.d.copy()
+	def prob(self, elt):
+		if self.d.has_key(elt):
+			return self.d[elt]
+		else:
+			return 0
+	def marginalizeOut(self,index):
+		newDict = {}
+		oldStates = []
+		newStates = []
+		for state in self.d.keys():
+			if removeElt(state,0) not in newStates:
+				newStates.append(removeElt(state,0))
+			if removeElt(state,1) not in oldStates:
+				oldStates.append(removeElt(state,1))
+		if index == 1:	# marginalize out the second index
+			intState = oldState
+			oldState = newState
+			newState = intState
+		for state in newStates:
+			value = 0
+			for oldState in oldStates:
+				value += self.prob((oldState,state))
+			newDict[state] = value
+		return DDist(newDict)
 
-    def dictCopy(self):
-        """
-        @returns: A copy of the dictionary for this distribution.
-        """
-        return self.d.copy()
-
-    def prob(self, elt):
-        """
-        @param elt: an element of the domain of this distribution
-        (does not need to be explicitly represented in the dictionary;
-        in fact, for any element not in the dictionary, we return
-        probability 0 without error.)
-        @returns: the probability associated with C{elt}
-        """
-        if self.d.has_key(elt):
-            return self.d[elt]
-        else:
-            return 0
-
-    def support(self):
-        """
-        @returns: A list (in arbitrary order) of the elements of this
-        distribution with non-zero probabability.
-        """
-        return [k for k in self.d.keys() if self.prob(k) > 0]
-
-    def __repr__(self):
-        if len(self.d.items()) == 0:
-            return "Empty DDist"
-        else:
-            dictRepr = reduce(operator.add,
-                              [util.prettyString(k)+": "+\
-                               util.prettyString(p)+", " \
-                               for (k, p) in self.d.items()])
-            return "DDist(" + dictRepr[:-2] + ")"
-    __str__ = __repr__
+	def support(self):
+		return [k for k in self.d.keys() if self.prob(k) > 0]
+	def __repr__(self):
+		if len(self.d.items()) == 0:
+			return "Empty DDist"
+		else:
+			dictRepr = reduce(operator.add,
+			[util.prettyString(k)+": "+\
+			util.prettyString(p)+", "\
+			for (k,p) in self.d.items()])
+		return "DDist(" + dictRepr[:-2] + ")"
+	__str__ = __repr__
 
 # 10.1.1
 foo = DDist({'hi':0.6,'med':0.1,'lo':0.3})
@@ -132,9 +139,11 @@ def JDist(PA, PBgA):
 		jointDict = PBgA(state).dictCopy()
 		for result in jointDict.keys():
 			dict[(state,result)] = PA.prob(state)*PBgA(state).prob(result)
-	return dict
+	return DDist(dict)
 
-print JDist(disease,PTgD)
+
+# Part 2: Implement marginalization
+print JDist(disease,PTgD).marginalizeOut(0)
 
 ######################################################################
 #   Utilities
