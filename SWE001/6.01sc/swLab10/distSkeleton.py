@@ -158,6 +158,15 @@ JDist(disease,PTgD).marginalizeOut(0)
 # Part 3: Implement conditioning
 JDist(disease,PTgD).conditionOnVar(1,'posTest')
 
+# 10.7.1 Implementing Operations on Conditional Distributions
+# Part 1: Implement bayesEvidence
+
+def bayesEvidence(PBgA, PA, b):	# returns P(A| B = b)
+	return JDist(PA,PBgA).conditionOnVar(1,b)
+
+bayesEvidence(PTgD,disease,'posTest')
+bayesEvidence(PTgD,disease,'negTest')
+
 ######################################################################
 #   Utilities
 
