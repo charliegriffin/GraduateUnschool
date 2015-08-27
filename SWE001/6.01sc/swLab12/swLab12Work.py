@@ -4,16 +4,29 @@ import lib601.ssm as ssm
 import lib601.util as util
 
 class StateEstimator(sm.SM):
-    def __init__(self, model):
-        self.model = model
-        self.startState = model.startDistribution
+	def __init__(self, model):
+		self.model = model
+		self.startState = model.startDistribution
+	def getNextValues(self, state, inp):
+		(o, i) = inp
+		print inp
+# 		print "state = ", state
+# 		print "observation = ", o
+# # 		print self.model.observationDistribution(o)
+# 		possibleAs = state.support()
+# 		print "jdist = ", dist.JDist(state,self.model.observationDistribution)
+		sGo = dist.bayesEvidence(state, self.model.observationDistribution,o)
+		print "sGo = ", sGo
+		aGo = self.bayesEvidence(state,o)
+		print "aGo = ", aGo
+		dSPrime = dist.totalProbability(sGo,
+		self.model.transitionDistribution(i))
+		return (dSPrime, dSPrime)
+	def bayesEvidence(self,state,observation):	# P(O|S)(observation distribution)*P(S)(state distribution)/P(O)
+		joint = dist.JDist(state, self.model.observationDistribution)
+		belief = joint.conditionOnVar(1,observation)
+		return belief
 
-    def getNextValues(self, state, inp):
-        (o, i) = inp
- 
-
-12.2.1 Stochastic State Machines
-Part 1: Distributions
 
 # Test
 
@@ -34,5 +47,16 @@ obs = [('perfect', 'step'), ('smudged', 'step'), ('perfect', 'step')]
 cmse = StateEstimator(copyMachine)
 
 print cmse.transduce(obs)
-
-
+# Expected outputs:
+# (py26)Charles-Griffins-MacBook-Pro:swLab12 charlesgriffin$ python swLab12Work.py 
+# [DDist(bad: 0.308219, good: 0.691781), DDist(bad: 0.754327, good: 0.245673), DDist(bad: 0.466413, good: 0.533587)]
+# (py26)Charles-Griffins-MacBook-Pro:swLab12 charlesgriffin$ python swLab12Work.py 
+# [DDist(bad: 0.308219, good: 0.691781), DDist(bad: 0.754327, good: 0.245673), DDist(bad: 0.466413, good: 0.533587)]
+# (py26)Charles-Griffins-MacBook-Pro:swLab12 charlesgriffin$ python swLab12Work.py 
+# [DDist(bad: 0.308219, good: 0.691781), DDist(bad: 0.754327, good: 0.245673), DDist(bad: 0.466413, good: 0.533587)]
+# (py26)Charles-Griffins-MacBook-Pro:swLab12 charlesgriffin$ python swLab12Work.py 
+# [DDist(bad: 0.308219, good: 0.691781), DDist(bad: 0.754327, good: 0.245673), DDist(bad: 0.466413, good: 0.533587)]
+# (py26)Charles-Griffins-MacBook-Pro:swLab12 charlesgriffin$ python swLab12Work.py 
+# [DDist(bad: 0.308219, good: 0.691781), DDist(bad: 0.754327, good: 0.245673), DDist(bad: 0.466413, good: 0.533587)]
+# 
+# 
