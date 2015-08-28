@@ -101,9 +101,9 @@ def squareDist(lo, hi, loLimit = None, hiLimit = None):
 			distDict[value] = prob
 	else:
 		if lo < loLimit:
-			distDict[loLimit] = 0
+			distDict[loLimit] = 0.
 		if hi > hiLimit:
-			distDict[hiLimit] = 0
+			distDict[hiLimit] = 0.
 		for value in range(lo,hi):
 			if hiLimit >= value >= loLimit:
 				if value not in distDict.keys():
@@ -116,11 +116,37 @@ def squareDist(lo, hi, loLimit = None, hiLimit = None):
 				distDict[hiLimit] += prob
 	return DDist(distDict)
 
-print squareDist(2,4)
-print squareDist(2,5)
-print squareDist(2,5,0,10)
-print squareDist(2,5,4,10)
-print squareDist(2,5,6,10)
+def triangleDist(peak, halfWidth, loLimit = None, hiLimit = None):
+	distDict = {}
+	if loLimit == None:	loLimit = peak - 10*halfWidth
+	if hiLimit == None: 	hiLimit = peak + 10*halfWidth
+	nStates = float(halfWidth**2)
+	if peak - halfWidth + 1 >= loLimit and peak + halfWidth - 1 <= hiLimit:
+		for value in range(halfWidth):
+			distDict[peak+value] = abs(value-halfWidth)/nStates
+			distDict[peak-value] = abs(value-halfWidth)/nStates
+	else:
+		if peak - halfWidth + 1 < loLimit:
+			distDict[loLimit] = 0.
+		if peak + halfWidth - 1 > hiLimit:
+			distDict[hiLimit] = 0.
+		for value in range(halfWidth):
+			if peak+value <= hiLimit:
+				distDict[peak+value] = abs(value-halfWidth)/nStates
+			else:
+				distDict[hiLimit] += abs(value-halfWidth)/nStates
+			if peak-value >= loLimit:
+				distDict[peak-value] = abs(value-halfWidth)/nStates
+			else:
+				distDict[loLimit] += abs(value-halfWidth)/nStates
+		if peak < loLimit:
+			distDict[loLimit] += distDict[peak]
+			del distDict[peak]
+		if peak > hiLimit:
+			distDict[hiLimit] += distDict[peak]
+			del DistDict[peak]
+	return DDist(distDict)
+	
 
 #-----------------------------------------------------------------------------
 # If you want to plot your distributions for debugging, put this file
