@@ -71,27 +71,27 @@ def incrDictEntry(d, k, v):
 #-----------------------------------------------------------------------------
 
 class MixtureDist:
-    def __init__(self, d1, d2, p):
-        # your code here
-        pass
-        
-    def prob(self, elt):
-        # your code here
-        pass
-
-    def support(self):
-        # your code here
-        pass
-
-    def __str__(self):
-        result = 'MixtureDist({'
-        elts = self.support()
-        for x in elts[:-1]:
-            result += str(x) + ' : ' + str(self.prob(x)) + ', '
-        result += str(elts[-1]) + ' : ' + str(self.prob(elts[-1])) + '})'
-        return result
-    
-    __repr__ = __str__
+	def __init__(self, d1, d2, p):
+		distDict = {}
+		domain = []
+		for value in d1.support() + d2.support():
+			domain.append(value)
+		domain = list(set(domain))	# removes repeated values
+		for value in domain:
+			distDict[value] = p*d1.prob(value) + (1.-p)*d2.prob(value)
+		self.dist = DDist(distDict)
+	def prob(self, elt):
+		return self.dist.prob(elt)
+	def support(self):
+		return self.dist.support()
+	def __str__(self):
+		result = 'MixtureDist({'
+		elts = self.support()
+		for x in elts[:-1]:
+			result += str(x) + ' : ' + str(self.prob(x)) + ', '
+		result += str(elts[-1]) + ' : ' + str(self.prob(elts[-1])) + '})'
+		return result
+	__repr__ = __str__
 
 def squareDist(lo, hi, loLimit = None, hiLimit = None):
 	distDict = {}
@@ -147,7 +147,9 @@ def triangleDist(peak, halfWidth, loLimit = None, hiLimit = None):
 			del DistDict[peak]
 	return DDist(distDict)
 	
-
+# print MixtureDist(squareDist(2,4),squareDist(10,12),0.5)
+# print MixtureDist(squareDist(2,4),squareDist(10,12),0.9)
+# print MixtureDist(squareDist(2,6),squareDist(4,8),0.5)
 #-----------------------------------------------------------------------------
 # If you want to plot your distributions for debugging, put this file
 # in a directory that contains lib601, and where that lib601 contains
