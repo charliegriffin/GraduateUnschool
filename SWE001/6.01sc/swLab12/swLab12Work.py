@@ -9,24 +9,55 @@ class StateEstimator(sm.SM):
 		self.startState = model.startDistribution
 	def getNextValues(self, state, inp):
 		(o, i) = inp
-		print inp
-# 		print "state = ", state
-# 		print "observation = ", o
-# # 		print self.model.observationDistribution(o)
-# 		possibleAs = state.support()
-# 		print "jdist = ", dist.JDist(state,self.model.observationDistribution)
-		sGo = dist.bayesEvidence(state, self.model.observationDistribution,o)
-		print "sGo = ", sGo
-		aGo = self.bayesEvidence(state,o)
-		print "aGo = ", aGo
-		dSPrime = dist.totalProbability(sGo,
-		self.model.transitionDistribution(i))
+		sGo = self.efficientBayesEvidence(state,o)
+		dSPrime = self.transitionUpdate(sGo)
 		return (dSPrime, dSPrime)
-	def bayesEvidence(self,state,observation):	# P(O|S)(observation distribution)*P(S)(state distribution)/P(O)
+	def bayesEvidence(self,state,observation):	# form a JD then marginalize
 		joint = dist.JDist(state, self.model.observationDistribution)
 		belief = joint.conditionOnVar(1,observation)
 		return belief
-
+	def efficientBayesEvidence(self,state,observation):	# P(O|S)(observation distribution)*P(S)(state distribution)/P(O)
+		bayesDict = {}
+		normalizationCoefficient = 0.
+		potentialStates = state.support()
+		for outcome in potentialStates:	# P(O|S)*P(S)
+			bayesDict[outcome] = self.model.observationDistribution(outcome).prob(observation)*state.prob(outcome)
+			normalizationCoefficient += bayesDict[outcome]
+ 		for element in bayesDict.keys():	# normalize or /P(O)
+ 			bayesDict[element] = bayesDict[element]/normalizationCoefficient
+		return dist.DDist(bayesDict)
+	def transitionUpdate(self,belief):
+		totalProbDict = {}
+		normalizationCoefficient = 0.
+		potentialStates = belief.support()
+		for outcome in potentialStates: # P(St+1) = sum_t(P(St+1|I1,St)*P(St|O)	
+			# iterates over St
+			for possibility in potentialStates:	# iterates over St+1
+				if possibility not in totalProbDict.keys():
+					totalProbDict[possibility] = belief.prob(outcome)*self.model.transitionDistribution(0)(outcome).prob(possibility)
+				else:
+					totalProbDict[possibility] += belief.prob(outcome)*self.model.transitionDistribution(0)(outcome).prob(possibility)
+		for outcome in totalProbDict.keys():	# calculate normalization coefficient
+			normalizationCoefficient += totalProbDict[outcome]
+		for outcome in totalProbDict.keys():	# normalize
+			totalProbDict[outcome] = totalProbDict[outcome]/normalizationCoefficient
+		return dist.DDist(totalProbDict)
+	def totalProbability(self,belief):
+		n = 0
+		partialDist = {}
+		for potentialState in belief.d.keys():		# go through states
+			print "potentialState = ", potentialState
+			partialDist[n] = self.model.transitionDistribution(0)(potentialState).d # what would it look like at this state
+			for outcome in partialDist[n].keys():
+				partialDist[n][outcome] *= belief.prob(potentialState)	# multiply by the probability of being in that state
+			n+=1
+		totalDist = partialDist[0]
+		for event in partialDist[0].keys():
+			for count in range(1,n):
+				totalDist[event] += partialDist[count][event]		# normalize
+		beliefPrime = dist.DDist(totalDist)
+		print beliefPrime
+		return beliefPrime
 
 # Test
 
