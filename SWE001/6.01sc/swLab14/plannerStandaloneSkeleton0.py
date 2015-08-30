@@ -14,10 +14,11 @@ class GridDynamics(sm.SM):
 	legalInputs = ['u','ur','r','dr','d','dl','l','ul']
 	def __init__(self, theMap):
 		self.map = theMap
+		self.stepSize = self.map.xStep
 	def nextState(self,state,inp):
 		nextState = list(state)
-		sCost = 1.
-		dCost = 2.**(0.5)
+		sCost = self.stepSize
+		dCost = (2.)**(0.5)*self.stepSize
 		if inp == 'u':
 			nextState[1] += 1
 			cost = sCost
@@ -53,6 +54,7 @@ class GridDynamics(sm.SM):
 			return (state,0.)
 	def getNextValues(self,state,inp):
 		if inp not in self.legalInputs:
+			print 'inp not legal'
 			return (state, 0.)
 		else:
 			return self.nextState(state,inp)
@@ -91,12 +93,33 @@ def testGridDynamics():
 	ans4 = [r2.getNextValues((2,3),a) for a in r2.legalInputs]
 	print 'starting from (2,3)', util.prettyString(ans4)
 
-testGridDynamics()
 	
 def planner(initialPose, goalPoint, worldPath, gridSquareSize):
-	pass
+	goalList = list(goalPoint.xyTuple())
+	initialList = list(initialPose.xytTuple()[:2])
+	gm = basicGridMap.BasicGridMap(worldPath,gridSquareSize)
+	goalIndices = gm.pointToIndices(goalPoint)
+	(initialX,initialY) = initialPose.xytTuple()[:2]
+	iI = util.Point(initialX,initialY)
+	initialIndices = gm.pointToIndices(iI)
+	def g(s):
+		gm.drawSquare(s,'gray')
+		return s == goalIndices	#goalTest = lambda x: x == goalTuple)
+	def heuristic(s):
+		return ((goalIndices[0]-s[0])**2.+(goalIndices[1]-s[1])**2)**(0.5)
+# 	ucSearch.somewhatVerbose = True
+	path = ucSearch.smSearch(GridDynamics(gm),initialState = initialIndices,
+	goalTest = lambda x: g(x),heuristic = lambda x: heuristic(x))
+	print "path = ", path
+	pathDrawing = []
+	for element in path:
+		loe = list(element)
+		pathDrawing.append(loe[1])
+	gm.drawPath(pathDrawing)
+	return path
 
 def testPlanner(world):
 	(worldPath, gridSquareSize, goalPoint, initialPost) = world
-	planner(initialPost,goalPoint,worldPath,gridSquareSize)
-			
+	planner(initialPost,goalPoint,worldPath,gridSquareSize)		
+	
+testPlanner(mapTestWorld)
