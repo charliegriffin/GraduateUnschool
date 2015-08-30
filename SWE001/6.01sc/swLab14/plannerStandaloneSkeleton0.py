@@ -122,4 +122,8 @@ def testPlanner(world):
 	(worldPath, gridSquareSize, goalPoint, initialPost) = world
 	planner(initialPost,goalPoint,worldPath,gridSquareSize)		
 	
-testPlanner(mapTestWorld)
+testPlanner(bigPlanWorld)
+
+# 14.1.3
+# no heuristic: 4617 nodes visited; 1260 states expanded; solution cost: 19.0710678119
+# heuristic: 1175 nodes visited; 303 states expanded; solution cost: 19.2175144213
