@@ -17,10 +17,10 @@ def find_center_of_start_bit(d_samples,start,samples_per_bit):
     Starting at d_samples[start] find the middle of the next
     START bit returning -1 if no start bit is found.
     """
-    position = start + 1	# code assumes start bit is a 0
+    position = start		# code assumes start bit is a 0
     while (position < len(d_samples)):
     	if d_samples[position] == 1:
-    		return position
+    		return position + samples_per_bit/2
     	else:
     		position += samples_per_bit
     return -1
@@ -33,7 +33,10 @@ def decode_data(d_samples,start,nbits,samples_per_bit):
       samples_per_bit is the interval between selections
     Return selected bits as a list or array.
     """
-    pass  # replace this with your commented code
+    bitList = []
+    for i in range(nbits):
+    	bitList.append(d_samples[start+i*samples_per_bit])
+    return bitList
 
 def receive(samples):
     """
@@ -48,14 +51,15 @@ def receive(samples):
     start = 0
     
     start = find_center_of_start_bit(d_samples,start,8)
-#     while True:
-#         # locate sample at middle of next START bit
-#         start = find_center_of_start_bit(d_samples,start,8)
-#         if start < 0 or start + 10*8 >= nsamples:
-#             break  # no START bit found or too near end of samples
-# 
-#         # grab the eight data bits which follow
-#         bits = decode_data(d_samples,start+8,8,8)
+    while True:
+        # locate sample at middle of next START bit
+        start = find_center_of_start_bit(d_samples,start,8)
+        if start < 0 or start + 10*8 >= nsamples:
+            break  # no START bit found or too near end of samples
+
+        # grab the eight data bits which follow
+        bits = decode_data(d_samples,start+8,8,8)
+        print bits
 # 
 #         # first convert bit sequence to an int
 #         # and then to a character, append to message
