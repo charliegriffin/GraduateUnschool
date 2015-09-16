@@ -10,7 +10,6 @@ p.ion()
 def plot_data(data):
 	# takes a numpy array
 	# plots it as a new figure using routines from matplotlib.pyplot
-	print data
 	p.plot(data)
 	p.title('Receiver data')
 	p.xlabel('Sample Number')
