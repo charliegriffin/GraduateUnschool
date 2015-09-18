@@ -27,6 +27,14 @@ def find10BitSequence(recievedSamples):
 		if numpy.array_equal(currentSequence,startSequence1) or numpy.array_equal(currentSequence,startSequence2):
 			return i+10
 
+def translateCharacter(recievedSamples,startPosition):
+	sequence = numpy.array(recievedSamples[startPosition:startPosition+10])
+	tenBitIndex = lab1.bits_to_int(sequence)
+	eightBitIndex = lab1.table_10b_8b[tenBitIndex]
+	character = chr(eightBitIndex)
+	return character
+	
+
 def receive_8b10b(samples):
 	"""
 	Convert an array of voltage samples transmitted by a
@@ -39,17 +47,9 @@ def receive_8b10b(samples):
 	recievedSamples = digitizedToRecieved(d_samples,R)
 # 	print recievedSamples
 	startPosition = find10BitSequence(recievedSamples)
-	sequence = numpy.array(recievedSamples[startPosition:startPosition+10])
-# 	sequence = find10BitSequence(recievedSamples)
-	print sequence
-	tenBitIndex = lab1.bits_to_int(sequence)
-	print tenBitIndex
-	eightBitIndex = lab1.table_10b_8b[tenBitIndex]
-	message += chr(eightBitIndex)
-	sequence2 = numpy.array(recievedSamples[startPosition+10:startPosition+20])
-	tenBitIndex2 = lab1.bits_to_int(sequence2)
-	eightBitIndex2 = lab1.table_10b_8b[tenBitIndex2]
-	message += chr(eightBitIndex2)
+	message += translateCharacter(recievedSamples,startPosition)
+	startPosition += 10
+	message += translateCharacter(recievedSamples,startPosition)
 	return message
 
 # testing code.  Do it this way so we can import this file
