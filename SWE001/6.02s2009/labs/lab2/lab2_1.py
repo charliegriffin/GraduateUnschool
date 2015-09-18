@@ -16,7 +16,24 @@ def transmit(bits,npreamble=0,
           v1: voltage to output for 1 bits
           repeat: how many times to repeat whole shebang
     """
-    pass  # your code here...
+    samples = []
+    for i in range(npreamble):
+    	samples.append(v0)
+    for bit in bits:
+		if bit == 0:
+			for i in range(samples_per_bit):
+				samples.append(v0)
+		elif bit == 1:
+			for i in range(samples_per_bit):
+				samples.append(v1)
+		else:
+			print "unexpected value in bits"
+    for i in range(npostamble):
+    	samples.append(v0)
+    while repeat > 1:
+    	samples += samples
+    	repeat -= 1
+    return samples
 
 if __name__ == '__main__':
     # give the transmit function a workout, report errors
