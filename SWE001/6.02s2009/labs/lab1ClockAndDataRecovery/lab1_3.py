@@ -50,11 +50,13 @@ def receive_8b10b(samples):
 	startPosition = findStartPosition(recievedSamples)
 	while True:
 		newCharacter = translateCharacter(recievedSamples,startPosition)
-		if newCharacter == None:	# this is the simple implementation
+		if len(recievedSamples[startPosition:]) < 10:	# reached the end of the transmission
 			break
-		else:
+		elif newCharacter == None:	# ignore the 10 bit sequence
+			pass
+		else:						# add the new character
 			message += newCharacter
-			startPosition += 10
+		startPosition += 10
 	return message
 
 # testing code.  Do it this way so we can import this file
