@@ -16,9 +16,15 @@ def test_channel(channel):
     message = [1,0,1,0,1,0,1,0]
     inp = lab2_1.transmit(message,10,100)
     out = channel(inp)
+    upper = max(max(inp),max(out))
+    lower = min(min(inp),min(out))
+    upper = upper + abs(upper)*0.1		# leave some space at the edges, unless that edge is 0
+    lower = lower - abs(lower)*0.1
     p.subplot(211)
+    p.axis([0,len(inp),lower,upper])	# custom axis scaling
     p.plot(inp)
     p.subplot(212)
+    p.axis([0,len(inp),lower,upper])	# make the axes the same
     p.plot(out)
     p.savefig(name+'.png')
     p.clf()
