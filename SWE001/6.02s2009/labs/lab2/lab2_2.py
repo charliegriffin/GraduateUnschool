@@ -20,14 +20,24 @@ def test_channel(channel):
     lower = min(min(inp),min(out))
     upper = upper + abs(upper)*0.1		# leave some space at the edges, unless that edge is 0
     lower = lower - abs(lower)*0.1
+    
+    p.figure()
+    p.suptitle(name,fontsize=20,fontweight='bold')
     p.subplot(211)
     p.axis([0,len(inp),lower,upper])	# custom axis scaling
-    p.plot(inp)
+    p.plot(inp,'g-')
+    p.title('Input')
+    p.grid(True)
+    p.ylabel('Voltage')
     p.subplot(212)
     p.axis([0,len(inp),lower,upper])	# make the axes the same
-    p.plot(out)
+    p.plot(out,'b-')
+    p.title('Output')
+    p.grid(True)
+    p.ylabel('Voltage')
+    p.xlabel('Sample Number')
     p.savefig(name+'.png')
-    p.clf()
+    p.clf()								# clears the figure so we can start blank again
 
 if __name__ == '__main__':
     # try out our two channels
