@@ -12,7 +12,6 @@ def test_channel(channel):
     passing the waveform through the channel.
     """
     name = channel.__name__
-    print name
     message = [1,0,1,0,1,0,1,0]
     inp = lab2_1.transmit(message,10,100)
     out = channel(inp)
