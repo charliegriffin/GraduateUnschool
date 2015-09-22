@@ -13,8 +13,8 @@ def sample_stats(samples,samples_per_bit=4,vth=0.5):
         column = bins[:,i]
         dist = column - vth
         distance = abs(dist)	# absolute value measures distance from threshold
-        min_dist = numpy.min(dist)
-        avg_dist = numpy.average(dist)
+        min_dist = numpy.min(distance)
+        avg_dist = numpy.average(distance)
         std_dist = numpy.std(dist)	# stdev of differences
         print "sample %d: min_dist=%6.3f, avg_dist=%6.3f, " \
               "std_dist=%6.3f" % (i,min_dist,avg_dist,std_dist)
