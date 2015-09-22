@@ -29,7 +29,7 @@ def receive(samples,samples_per_bit=4,vth=0.5):
     bit = sample_stats(samples,samples_per_bit,vth)	# choose the appropriate location to sample
     dSamples = digitizeSamples(samples,vth)
     rSamples = []
-    for index in range(len(dSamples)):
+    for index in range(len(dSamples)):	# takes bits from the chosen location
     	if index%samples_per_bit == bit:
     		rSamples.append(dSamples[index])
     return rSamples
