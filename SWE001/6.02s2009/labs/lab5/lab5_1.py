@@ -2,6 +2,9 @@
 import numpy
 import lab5
 
+def digitize(samples,threshold):
+	return 1*(samples > threshold)
+
 class ViterbiDecoder:
     # given the constraint length and a list of parity generator
     # functions, do the initial set up for the decoder.  The
@@ -52,7 +55,11 @@ class ViterbiDecoder:
     # Consider using lab5.hamming(seq1,seq2) which computes the
     # Hamming distance between two binary sequences.
     def branch_metric(self,expected,received):
-        pass  # your code here...
+        assert len(expected) == len(received)	# they must be the same length
+        vTh = 0.5
+        dSamples = digitize(received,vTh)
+        return lab5.hamming(expected,dSamples)
+        
 
     # compute self.PM[...,n] from the batch of r parity bits and
     # the path metrics for self.PM[...,n-1] computed on the previous
@@ -145,5 +152,8 @@ class ViterbiDecoder:
 if __name__=='__main__':
     d = ViterbiDecoder(3,(7,6))
     received = numpy.array([1,1,1,0,1,1,0,0,0,1,1,0,0,0])
-    message = d.decode(received,debug=True)
-    print "decoded message =",message
+    expected = numpy.array([0,1,1,0,1,1,0,0,0,1,1,0,1,0])
+    print d.branch_metric(expected,received)
+    
+#     message = d.decode(received,debug=True)
+#     print "decoded message =",message
