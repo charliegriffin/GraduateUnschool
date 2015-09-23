@@ -13,24 +13,22 @@ def decode(received):
         indexesToUnstuff = []
         for index in range(len(block)-7): # find the locations of the stuffed bits
         	if block[index:index+7] == stuffedBit:
-        		indexesToUnstuff.append(index+8)
+        		indexesToUnstuff.append(index+7)
         for i in range(len(indexesToUnstuff)):	# remove the stuffed bits
-        	del block[i]
+        	del block[indexesToUnstuff[i]]
         	if i == len(indexesToUnstuff) - 1:
         		break
         	else:
-        		indexesToUnstuff[i+1] -= 1		# update the indexes to reflect the changes we made
-		# now all blocks are 15*16 in length
+				for j in range(i,len(indexesToUnstuff)):
+					indexesToUnstuff[j] -= 1		# update the indexes to reflect the changes we made
 
+		# now all blocks are 15*16 in length
         # now block should have exactly 15*16 elements.
         # use lab4.interleave to deinterleave the block.
-
-
-        # for each group of 15 bits in the block, extract
-        # the (uncorrected) data bits and use lab4.bin2char
-        # to convert them to an ASCII character, which you
-        # should append to message
-# 	lab4.printmsg(message)
+        dBlock = lab4.interleave(block,16)
+        for num in xrange(len(dBlock)/15):
+        	message.append(lab4.bin2char(dBlock[num*15:(num*15)+8]))
+    lab4.printmsg(message)
 
 if __name__ == '__main__':
     decode(lab4.message)
