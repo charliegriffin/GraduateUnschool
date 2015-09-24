@@ -72,12 +72,11 @@ class ViterbiDecoder:
     #    self.expected_parity
     #    self.branch_metric()
     def viterbi_step(self,n,received_voltages):
-
 		for state in xrange(self.nstates):
 			(alpha,beta) = self.predecessor_states[state]
 			(pAlpha,pBeta) = (self.expected_parity[alpha][state],self.expected_parity[beta][state])
 			bmAlpha = self.branch_metric(pAlpha,received_voltages)
-			bmBeta = self.branch_metric(pAlpha,received_voltages)
+			bmBeta = self.branch_metric(pBeta,received_voltages)
 			pmAlpha = self.PM[alpha][n-1]+bmAlpha
 			pmBeta = self.PM[beta][n-1]+bmBeta
 			if pmAlpha <= pmBeta:
@@ -86,15 +85,7 @@ class ViterbiDecoder:
 			else:
 				self.PM[state][n] = pmBeta
 				self.Predecessor[state][n] = beta
-			
-#         if received_voltages[0] == 1 and received_voltages[1] == 1:
-#         	alpha = [1,0]
-#         	beta = [1,1]
-#         	# for the state transitions, determine the r parity bits
-#         	pAlpha = [0,0]
-#         	pBeta = [1,0]
-#         	# call the next set of r parity bits p_recieved
-    	
+
     # Identify the most-likely ending state of the encoder by
     # finding the state s which has the mimimum value of PM[s,n]
     # where n points to the last column of the trellis.  If there
@@ -103,7 +94,18 @@ class ViterbiDecoder:
     # and repeat the search. Keep doing this until a unique s is
     # found.  Return the tuple (s,n).
     def most_likely_state(self,n):
-        pass  # your code here...
+    	minState = [0]
+    	minValue = self.PM[0,n]
+        for state in range(1,self.nstates):
+        	if self.PM[state][n] < minValue:
+        		minState = [state]
+        		minValue = self.PM[state,n]
+        	elif self.PM[state][n] == minValue:
+        		minState.append(state)
+        if len(minState) > 1:	# message is corrupted by errors
+        	return self.most_likely_state(n-1)
+        else:
+        	return (minState[0],n)
 
     # starting at state s at time n, use the Predecessor
     # array to find all the states on the most-likely
