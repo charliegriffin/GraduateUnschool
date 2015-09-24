@@ -76,7 +76,16 @@ class ViterbiDecoder:
 		for state in xrange(self.nstates):
 			(alpha,beta) = self.predecessor_states[state]
 			(pAlpha,pBeta) = (self.expected_parity[alpha][state],self.expected_parity[beta][state])
-
+			bmAlpha = self.branch_metric(pAlpha,received_voltages)
+			bmBeta = self.branch_metric(pAlpha,received_voltages)
+			pmAlpha = self.PM[alpha][n-1]+bmAlpha
+			pmBeta = self.PM[beta][n-1]+bmBeta
+			if pmAlpha <= pmBeta:
+				self.PM[state][n] = pmAlpha
+				self.Predecessor[state][n] = alpha
+			else:
+				self.PM[state][n] = pmBeta
+				self.Predecessor[state][n] = beta
 			
 #         if received_voltages[0] == 1 and received_voltages[1] == 1:
 #         	alpha = [1,0]
