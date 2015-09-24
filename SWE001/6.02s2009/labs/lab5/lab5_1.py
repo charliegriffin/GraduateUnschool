@@ -72,8 +72,20 @@ class ViterbiDecoder:
     #    self.expected_parity
     #    self.branch_metric()
     def viterbi_step(self,n,received_voltages):
-        pass  # your code here...
 
+		for state in xrange(self.nstates):
+			(alpha,beta) = self.predecessor_states[state]
+			(pAlpha,pBeta) = (self.expected_parity[alpha][state],self.expected_parity[beta][state])
+
+			
+#         if received_voltages[0] == 1 and received_voltages[1] == 1:
+#         	alpha = [1,0]
+#         	beta = [1,1]
+#         	# for the state transitions, determine the r parity bits
+#         	pAlpha = [0,0]
+#         	pBeta = [1,0]
+#         	# call the next set of r parity bits p_recieved
+    	
     # Identify the most-likely ending state of the encoder by
     # finding the state s which has the mimimum value of PM[s,n]
     # where n points to the last column of the trellis.  If there
@@ -151,9 +163,6 @@ class ViterbiDecoder:
 
 if __name__=='__main__':
     d = ViterbiDecoder(3,(7,6))
-    received = numpy.array([1,1,1,0,1,1,0,0,0,1,1,0,0,0])
-    expected = numpy.array([0,1,1,0,1,1,0,0,0,1,1,0,1,0])
-    print d.branch_metric(expected,received)
-    
-#     message = d.decode(received,debug=True)
-#     print "decoded message =",message
+    received = numpy.array([1,1,1,0,1,1,0,0,0,1,1,0,0,0])    
+    message = d.decode(received,debug=True)
+    print "decoded message =",message
