@@ -12,21 +12,27 @@ import matplotlib.pyplot as p
 class CSMANode(WirelessNode):
     def __init__(self,location,network,retry):
         WirelessNode.__init__(self,location,network,retry)
+        self.pmin = network.pmin
+        self.pmax = network.pmax
+        self.p = self.pmax
         # any additional state or variables may be set here
 
     def channel_access(self,time,ptime,numnodes):
         # You can tell if the channel is busy or not using
         # the self.network.channel_busy() function call.
-        ## Your code here
-        pass
+		if not self.network.channel_busy():	# checks for business
+			if self.p >= random.random():	# same as aloha with backup
+				return True
+		return False
 
     def on_collision(self,packet):
-        ## Your code here
-        return
+		# again this is all based on 'intuition', not thinking too hard
+		if self.network.config.backoff == 'None':
+			return
+		self.p = self.pmin
 
     def on_xmit_success(self,packet):
-        ## Your code here
-        return
+		self.p = self.pmax
 
 ################################################################
 
