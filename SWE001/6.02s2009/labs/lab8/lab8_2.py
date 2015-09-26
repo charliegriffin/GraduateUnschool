@@ -14,8 +14,13 @@ class AlohaNode(WirelessNode):
         self.p = network.p
 
     def channel_access(self,time,ptime,numnodes):
-        ## Your code here
-        return
+        # send packet with probability p
+        # see web.mit.edu/6.02/www/s2009/handouts/net2-mac.pdf for proof
+        # that this code is super simple and I'm not just copying SHY
+        if random.random() <= self.p:
+        	return True
+        else:
+        	return False
 
 ################################################################
 

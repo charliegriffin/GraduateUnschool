@@ -11,21 +11,30 @@ import matplotlib.pyplot as p
 class AlohaNode(WirelessNode):
     def __init__(self,location,network,retry):
         WirelessNode.__init__(self,location,network,retry)
+        self.pmin = network.pmin
+        self.pmax = network.pmax
+        self.p = (self.pmin + self.pmax)/2.
         ## Your code to initialize any additional state or variables goes here
 
     def channel_access(self,time,ptime,numnodes):
-        ## Your code here
-        pass
+        # send packet with probability p
+        # see web.mit.edu/6.02/www/s2009/handouts/net2-mac.pdf for proof
+        # that this code is super simple and I'm not just copying SHY
+        if random.random() <= self.p:
+        	return True
+        else:
+        	return False
 
     def on_collision(self,packet):
-        if self.network.config.backoff == 'None':
-            return
-        ## Your code here
-        pass
+    	# I wrote this by just messing with n and changing the code till it got the results
+    	# the project requested, no real intuition here
+    	if self.network.config.backoff == 'None':
+    		return
+    	self.p = (self.pmin + self.p)/2.
+    	return
 
     def on_xmit_success(self,packet):
-        ## Your code here
-        pass
+    	self.p = self.pmax
 
 ################################################################
 
