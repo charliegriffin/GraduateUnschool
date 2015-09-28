@@ -21,11 +21,18 @@ class DVRouter(Router):
     # Make a distance vector protocol advertisement, which will be sent
     # by the caller along all the links
     def make_dv_advertisement(self):
-        ## Your code here
-        return
+		# scan the self.routes and self.spcost tables
+		destCostList = []
+		for destination in self.spcost.keys():
+			destCostList.append((destination,self.spcost[destination]))
+		print 'ad = ', destCostList
+		return
 
     def link_failed(self, link):
-        ## Your code here
+        for destination in self.spcost.keys():
+        	if self.routes[destination] == link:
+        		del self.routes[destination]
+        		del self.spcost[destination] 
         return
 
     def process_advertisement(self, p, link, time):
