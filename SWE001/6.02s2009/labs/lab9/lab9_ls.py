@@ -15,9 +15,12 @@ class LSRouter(Router):
         self.LSA_seqnum = 0     # uniquely identify each LSA broadcast
 
     def make_ls_advertisement(self):
-        # Make a list of all neighbors to send out in an LSA
-        ## Your code here
-        return
+    	# return a list of neighbors and costs
+    	ad = []
+    	for neighbor in self.neighbors.values():
+    		ad.append((neighbor[1],neighbor[2]))
+    	print 'ad = ', ad
+    	return ad
 
     def send_lsa(self, time):
         self.LSA_seqnum += 1
