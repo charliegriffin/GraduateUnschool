@@ -26,22 +26,42 @@ class DVRouter(Router):
 		for destination in self.spcost.keys():
 			destCostList.append((destination,self.spcost[destination]))
 		print 'ad = ', destCostList
-		return
+		return destCostList
 
     def link_failed(self, link):
         for destination in self.spcost.keys():
         	if self.routes[destination] == link:
         		del self.routes[destination]
         		del self.spcost[destination] 
-        return
+
 
     def process_advertisement(self, p, link, time):
         self.integrate(p.source, p.properties['ad'])
 
     # Integrate new routing advertisement to update routing table and costs
+    # I solved this problem by making SHY's code super verbose, then filling the real code
+    # (not print statem
     def integrate(self,fromnode,adv):
-        ## Your code here
-        pass
+#         print 'fromnode = ', fromnode,'adv = ',adv
+        # on hearing advertisement, run Bellman-Ford step:
+        # if (current cost to dest > cost in advertisement) then update cost, nexthop
+#         print 'heard advertisement:',adv
+#         print 'link = ',self.getlink(fromnode)
+		link = self.getlink(fromnode)
+		links = [i for (i,j) in adv]
+		for dest in self.routes.keys():
+			if not (dest in links) and self.routes[dest] == link:
+				del self.routes[dest]
+		for (dest,adCost) in adv:
+			'''if the cost has changed, update'''
+			if dest in self.routes.keys() and self.routes[dest] == link:
+				self.spcost[dest] = link.cost + adCost
+        	
+        	# if the destination is new online or a shorter path was found, update
+        	if not dest in self.routes.keys() or adCost < self.spcost[dest] > (adCost +link.cost):
+        		self.routes[dest] = link
+        		self.spcost[dest] = link.cost
+        
 
 # A network with nodes of type DVRouter.
 class DVRouterNetwork(RouterNetwork):
