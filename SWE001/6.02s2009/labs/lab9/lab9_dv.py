@@ -47,7 +47,9 @@ class DVRouter(Router):
         # if (current cost to dest > cost in advertisement) then update cost, nexthop
 #         print 'heard advertisement:',adv
 #         print 'link = ',self.getlink(fromnode)
+		print 'fromnode =', fromnode
 		link = self.getlink(fromnode)
+		print 'link =', link
 		links = [i for (i,j) in adv]
 		for dest in self.routes.keys():
 			if not (dest in links) and self.routes[dest] == link:

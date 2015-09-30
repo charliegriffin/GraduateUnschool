@@ -4,6 +4,11 @@ from lab9_net import *
 from lab9_router import *
 from lab9_random_graph import *
 
+# Disclaimer: I needed a lot of help on this assignment, and would have probably
+# failed it, however since I passed 9 others, I still passed the class
+# I did however, slowly deconstruct and understand SHY's code, which is what is
+# reproduced in this file
+
 """Skeleton for link-state routing lab in 6.02
 """
 class LSRouter(Router):
@@ -19,7 +24,6 @@ class LSRouter(Router):
     	ad = []
     	for neighbor in self.neighbors.values():
     		ad.append((neighbor[1],neighbor[2]))
-    	print 'ad = ', ad
     	return ad
 
     def send_lsa(self, time):
@@ -75,9 +79,54 @@ class LSRouter(Router):
                         nodes.append(v)
         return nodes
 
+
     def run_dijkstra(self, nodes):
-        ## Your code here
-        return
+#       assign to every node a tentative distance value, 0 for initial, inf for else
+		infinity = 10000
+# 		print 'LSA =', self.LSA
+		previous = {self.address:None}
+		for dest in self.spcost.keys():
+			if dest == self.address:
+				self.spcost[dest] = 0
+			else:
+				self.spcost[dest] = infinity
+# 		set the intial node as current, mark all other nodes unvisited
+# 		for the current node, compare the newly calculated tentative
+# 		distance to the current assigned value and asign the smaller one.
+		unvisited = nodes[:]
+		while len(unvisited) > 0:
+# 		find smallest cost and the associated node
+			for dest in unvisited:
+				if self.spcost[dest] < infinity:
+					minCost = self.spcost[dest]
+					current = dest
+		
+# 		remove smallest cost node
+# 		when we are done considering all of the neighbors of the current node,
+# 		make the current node as visited and remove it from the unvisited set
+			unvisited.remove(current)
+		
+# 		update the costs of all neighboring nodes
+			for (next,cost) in self.LSA[current][1:]:
+				newCost = self.spcost[current] + cost
+				if newCost < self.spcost[next]:
+					self.spcost[next] = newCost
+					previous[next] = current
+
+		def getRoute(tree, target):
+			if tree[target] == None:
+				return self
+			elif tree[target] == self.address:
+				return self.getlink(target)
+			else:
+				return getRoute(tree, tree[target])
+
+# 		find the routes
+		self.routes = {}
+		for n in nodes:	
+			self.routes[n] = getRoute(previous, n)
+		print self.routes
+		return
 
     # Let's clear the current routing table and rebuild it.  The hard work
     # is done by run_dijkstra().
