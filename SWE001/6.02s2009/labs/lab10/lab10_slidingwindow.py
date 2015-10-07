@@ -22,7 +22,8 @@ class ReliableSenderNode(Router):
         self.srtt = 0
         self.rttdev = 0
         self.timeout = self.TIMEOUT
-        ## Your initialization code here
+        self.seqnum = 1
+        self.sndbuf = []
 
     def __repr__(self):
         return 'ReliableSenderNode<%s>' % str(self.address)
@@ -68,14 +69,41 @@ class ReliableSenderNode(Router):
     # 3. The sequence number of a packet p may be retrieved using 
     # p.properties['seqnum'].
     def reliable_send(self, time):
-        ## Your code here
-        pass
+
+	# find unacknowledged packet with the largest wait
+	packet = None
+	longestWait = -1
+	for unacked in self.sndbuf:
+		if unacked.start > self.timeout + time:
+			longestWait = unacked.start	- time
+			packet = unacked
+	# send a new packet if no packets have timed out and there is room
+	if len(self.sndbuf) < self.window and longestWait <= self.timeout:
+		print 'adding new unacked packet'
+		self.sndbuf.append(self.send_pkt(time,self.seqnum,'green'))
+	# resend timed-out package
+	elif longestWait > self.timeout:
+		print 'resending old packet'
+		self.send_pkt(time,packet.properties['seqnum'],'red')
+
 
     # An ACK just arrived; process it.  Remember to call calc_timeout with the
     # appropriate information.
     def process_ack(self, time, acknum, timestamp):
-        ## Your code here
-        pass
+		useqnum = None
+		# same code, we just go through all the packets to see where it corresponds
+		for unacked in self.sndbuf:
+			# find the appropriate packet
+			if acknum == unacked.properties['seqnum']:
+				useqnum = unacked.properties['seqnum']
+				break
+		
+		if useqnum != None:
+			self.sndbuf.remove(unacked) # since this package has been acknowledged
+			self.timeout = self.calc_timeout(time,timestamp)
+			self.seqnum += 1
+		else:
+			print 'Error: acknowedgement does not corresond to packet in window'
 
     # Update RTT statistics and compute the sender's timeout value.  The 
     # current time and the timestamp echoed in the ACK from the receiver 
@@ -83,8 +111,14 @@ class ReliableSenderNode(Router):
     # Copy this function from Task 1 (stop-and-wait protocol) of Lab 10; if
     # that code is correct, it should work unchanged.
     def calc_timeout(self, time, timestamp):
-        ## Your code here (copy it over from task 1)
-        pass
+        # this one didn't change
+        r = time - timestamp
+        self.srtt = self.ALPHA*r + (1-self.ALPHA)*self.rttdev
+        dev = abs(r-self.srtt)
+        self.rttdev = self.BETA*dev + (1-self.BETA)*self.rttdev
+        print 'Smoothed RTT = ',self.srtt
+        print 'Sigma(RTT) = ',self.rttdev
+        return self.srtt + 4*self.rttdev
 
     # Process an ACK (and ignore any other packet type)
     def receive(self,p,link,time):
@@ -106,7 +140,7 @@ class ReliableReceiverNode(Router):
         Router.reset(self)
         self.app_seqnum = 0
         self.lastprinttime = 0
-        ## Your code for initializing the receiver should go here 
+        self.rcvbuf = []
 
     def __repr__(self):
         return 'ReliableReceiverNode<%s>' % str(self.address)
@@ -148,8 +182,19 @@ class ReliableReceiverNode(Router):
     # An error will result either in the receiver "hanging" or in an assertion
     # failure in app_receive().
     def reliable_recv(self, sender, time, seqnum, timestamp):
-        ## Your code here
-        pass
+        buffer = self.rcvbuf[:]
+        self.send_ack(sender,time,seqnum,timestamp)
+        if seqnum == 1 + self.app_seqnum:
+        	self.app_receive(seqnum,time)
+        	for sequence in buffer:
+        		if sequence == self.app_seqnum + 1:
+        			self.send_ack(sender,time,seq,timestamp)
+        			self.app_receive(sequence,time)
+        			self.rcvbuf.remove(sequence)
+        if seqnum <= self.app_seqnum:
+        	pass
+        else:
+        	self.rcvbuf.append(seqnum)
 
     # app_receive() should be called by receive() for each data packet that 
     # arrives in order of incrementing sequence number (i.e., without gaps)
