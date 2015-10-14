@@ -79,7 +79,11 @@ $$
 
 \ifsolution \solution{}
 %%% PROBLEM 1(a) SOLUTION START %%%
-1, 2, 3, 4
+1, 2, 4, 3
+\\$f_1$: logs grow very slowly asymptotically, so we can approximate this as being $O(n)$ (it should be a little slower).
+\\$f_2$: $O(n)$ with a higher coefficient than $f_1$
+\\$f_4$: $O(n^2)$
+\\$f_3$: Asymptotically exponential functions grow faster than power functions.
 %%% PROBLEM 1(a) SOLUTION END %%%
 \fi
 
@@ -96,7 +100,11 @@ $$
 
 \ifsolution \solution{}
 %%% PROBLEM 1(b) SOLUTION START %%%
-1, 2, 3, 4
+1, 4, 3, 2
+\\$f_1$: $O(1)$, does not grow with $n$
+\\$f_4$: $O(n)<O(f_4)<O(n^2)$
+\\$f_2$: $nC2 = \frac{n!}{2(n-2)!} = \frac{n\times(n-2)}{2} = O(n^2)$
+\\$f_3$: Exponential
 %%% PROBLEM 1(b) SOLUTION END %%%
 \fi
 
@@ -113,8 +121,15 @@ $$
 
 \ifsolution \solution{}
 %%% PROBLEM 1(c) SOLUTION START %%%
-1, 2, 3, 4
+4, 1, 3, 2
+This is really simple if we put functions 2,3 and 4 in the same form.
+\\$f_4$: $\displaystyle\sum_{i = 1}^{n} (i + 1) = \frac{n(n+3)}{2} = O(n^2)$
+\\$f_1$: $n^{\sqrt{n}} = e^{\ln{n}\sqrt{n}} \approx 2^{\ln{n}\sqrt{n}}$
+\\$f_3$: For $n>>1$, $O(f_3) = O(2^{\frac{n}{2}})$
+\\$f_2$: $n$ grows faster than $\frac{n}{2}$, which grows faster than $\sqrt{n}\ln{n}$, so the exponentials fall in the same order
+
 %%% PROBLEM 1(c) SOLUTION END %%%
+
 \fi
 
 \end{problemparts}
@@ -149,7 +164,11 @@ $$
 
 \ifsolution \solution{}
 %%% PROBLEM 2(a) SOLUTION START %%%
-1
+2
+\\Writing out the runtime recursively:
+\\$T(n,n) = \Theta(2n) + \Theta(n) + \Theta(\frac{n}{2}) + \Theta(\frac{n}{4}) + \ldots$
+This is a geometric sequence, which is bounded above as described below:
+\\$\Theta(2n) \geq T(n,n) \geq \Theta(4n) \\ \implies T(n,n)$ is $\Theta(n)$
 %%% PROBLEM 2(a) SOLUTION END %%%
 \fi
 
@@ -176,7 +195,12 @@ $$
 
 \ifsolution \solution{}
 %%% PROBLEM 2(b) SOLUTION START %%%
-1
+3
+\\Writing out the runtime recursively:
+\\$T(n,n) = \Theta(n) + \Theta(n) + \ldots + \Theta(n)$
+\\The algorithm will repeat until $n \leq 2$, and $n$ is divided by two in each recursive call.
+Thus there will be $\log_2{n}$ terms in the sum.  Using this information to simplify the sum we find:
+\\$T(n,n) = \Theta(n)*\log_2{n} = \Theta(n\log{n})$
 %%% PROBLEM 2(b) SOLUTION END %%%
 \fi
 
@@ -204,7 +228,13 @@ $$
 
 \ifsolution \solution{}
 %%% PROBLEM 2(c) SOLUTION START %%%
-1
+2
+\\When the runtime is written recursively it becomes a geometric series, similar to part a.
+\\$T(n,n) = \Theta(n) + \Theta(\frac{n}{2}) + \Theta(\frac{n}{2}) + \Theta(\frac{n}{4}) + \ldots
+\\T(n,n) = \Theta(n) + 2\Theta(\frac{n}{2}) + 2\Theta(\frac{n}{4}) + \ldots
+\\T(n,n) \leq \Theta(n) + 2\Theta(n)$
+\\so  $3\Theta(n) \geq T(n,n) \geq \Theta(n)$
+$\implies T(n,n)$ is $\Theta(n)$
 %%% PROBLEM 2(c) SOLUTION END %%%
 \fi
 
