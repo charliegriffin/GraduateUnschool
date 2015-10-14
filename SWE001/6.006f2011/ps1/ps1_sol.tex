@@ -15,8 +15,8 @@
 
 % Fill these in!
 \newcommand{\theproblemsetnum}{1}
-\newcommand{\releasedate}{September 8, 2011}
-\newcommand{\partaduedate}{Thursday, September 15}
+\newcommand{\releasedate}{October 12, 2015}
+\newcommand{\partaduedate}{Monday October 12}
 \newcommand{\tabUnit}{3ex}
 \newcommand{\tabT}{\hspace*{\tabUnit}}
 
@@ -54,7 +54,7 @@ your critique of the solutions.
 
 \textbf{Collaborators:}
 %%% COLLABORATORS START %%%
-None.
+Charlie Griffin
 %%% COLLABORATORS END %%%
 
 \begin{problems}
@@ -273,6 +273,7 @@ and which are efficient.
 \ifsolution \solution{}
 %%% PROBLEM 3(a) SOLUTION START %%%
 1
+\\This was argued in lecture 1, algorithm1 is the 2d version of the 1d bisection search, which was presented and shown to be correct.  Also the problem statement of 1-5 is a proof that this algorithm is correct.
 %%% PROBLEM 3(a) SOLUTION END %%%
 \fi
 
@@ -285,6 +286,7 @@ and which are efficient.
 \ifsolution \solution{}
 %%% PROBLEM 3(b) SOLUTION START %%%
 1
+\\This is the greedy ascent algorithm that was shown to be correct in lecture 1.  It was guaranteed to work since in the worst case scenario it will check if every position is a peak (and return once one is found).
 %%% PROBLEM 3(b) SOLUTION END %%%
 \fi
 
@@ -296,7 +298,11 @@ and which are efficient.
 
 \ifsolution \solution{}
 %%% PROBLEM 3(c) SOLUTION START %%%
-1
+2
+\\This will not work in all cases.  A counter-example is provided in 1-6.  To verify that this is a counter example run the following command in the ps1/ directory:
+\\$>>$python main.py
+\\$>>$Enter a file name to load from (default: problem.py): counterexample.py
+\\A basic description of why the algorithm fails is that it can find a peak in an iterative subproblem that is not a peak in the original problem.
 %%% PROBLEM 3(c) SOLUTION END %%%
 \fi
 
@@ -309,6 +315,8 @@ and which are efficient.
 \ifsolution \solution{}
 %%% PROBLEM 3(d) SOLUTION START %%%
 1
+\\Yes, algorithm 4 is a more efficient version of algorithm 1.  It works following the same procedure but rotating the problem between steps (so it alternates between rows and columns.)
+For a more detailed explanation see 1-5.
 %%% PROBLEM 3(d) SOLUTION END %%%
 \fi
 
@@ -330,7 +338,10 @@ and which are efficient.
 
 \ifsolution \solution{}
 %%% PROBLEM 4(a) SOLUTION START %%%
-1
+3
+\\$T(n,n) = T(n,\frac{m}{2} + \Theta(n) = \log_2{m}\times\Theta(n) = \Theta(n\log_2(n))$
+The first term in the recurrence relations is the subproblem (half of the matrix).  The second term corresponds to the cost of finding the global max along the dividing column.
+This was shown in lecture, and is very similar to the argument presented in 1-2 b.
 %%% PROBLEM 4(a) SOLUTION END %%%
 \fi
 
@@ -346,7 +357,8 @@ and which are efficient.
 
 \ifsolution \solution{}
 %%% PROBLEM 4(b) SOLUTION START %%%
-1
+5
+\\As shown and argued in lecture 1, the algorithm could visit every matrix element and check the neighbors (cost $\Theta(1)$ to check neighbors), in a worst case scenario.  There are $n\times n$ elements, so $T(n,n)$ is $\Theta(n^2)$.
 %%% PROBLEM 4(b) SOLUTION END %%%
 \fi
 
@@ -362,7 +374,11 @@ and which are efficient.
 
 \ifsolution \solution{}
 %%% PROBLEM 4(c) SOLUTION START %%%
-1
+2
+\\$T(n,n) = T(\frac{n}{2},\frac{n}{2}) + \Theta(m+n)$
+\\The first term comes from the new subproblem (one quadrant of the matrix), and the second term is the cost to find the global max across the cross.  This is another geometric series.
+\\$T(n,n) = \Theta(2n) + \Theta(n) + \Theta(\frac{n}{2}) + \ldots < \Theta(4n)$
+\\$ \Theta(4n) > T(n,n) > \Theta(2n) \implies T(n,n)$ is $\Theta(n)$
 %%% PROBLEM 4(c) SOLUTION END %%%
 \fi
 
@@ -378,7 +394,12 @@ and which are efficient.
 
 \ifsolution \solution{}
 %%% PROBLEM 4(d) SOLUTION START %%%
-1
+2
+\\$T(m,n) = \Theta(n) + T(\frac{n}{2},m)$
+\\The first term is from finding the global max along the dividing row/column, the second term is the new subproblem, which has half the columns/rows, and it searches rows if columns were removed last time, as well as the converse, which is why the ordering of $m$ and $n$ are switched here.  Writing this out it also reveals itself to be a geometric series.
+\\$T(n,n) = \Theta(n) + \Theta(n) + \Theta({n}{2}) + \Theta({n}{2}) + \ldots
+\\T(n,n) = 2\left( \Theta(n) + \Theta(\frac{n}{2}) + \ldots \right) \leq 2\left(2\Theta(n)\right)$
+This argument has been presented enough times in this solution for it to be clear $T(n,n)$ is $\Theta(n)$.
 %%% PROBLEM 4(d) SOLUTION END %%%
 \fi
 
@@ -473,7 +494,28 @@ Hence, we have a contradiction.
 
 \ifsolution \solution{}
 %%% PROBLEM 5 SOLUTION START %%%
-Write your proof here.
+1. If the peak problem is not empty, then algorithm 4 will always return a location.
+\\Say that we start with a problem of size $m \times n$.  The recursive subproblem examined by algorithm 4 will have dimensions $m \times \lfloor \frac{n}{2} \rfloor$ or $m \times ( n - \lfloor\frac{n}{2} \rfloor -1 )$ if the columns are split and $ \lfloor \frac{m}{2} \rfloor \times n$ or  $( m - \lfloor\frac{m}{2} \rfloor -1 ) \times n$ if the rows are split on the recursive function call.  Therefore the number of columns and rows strictly decrease as long as $n,m>0$.  So algorithm 4 either returns a location at some point, or eventually examines a subproblem with a non-positive number of columns or rows.  For the number of columns or rows to become strictly negative, $n$ or $m$ must becomes 0 at some point, so if algorithm 4 does not return a location, it must eventually examine an empty subproblem.  We want to show that this cannot occur.\\
+Assume algorithm 4 examines an empty subproblem.  Before this it must examine a problem which has 1 or 2 rows or columns and is dividing along the dimension (rows if number of rows is 1 or 2, columns if columns meet this criteria) that is headed towards zero.  If there is one row or column, the max along that row or column is the max of the problem, meaning that it is a peak, which is returned.  The remaining case is 2 rows or columns.  For this scenario there are two possibilities.
+\begin{enumerate}
+\item{the max is in the searched (dividing) row/column}
+\item{there is a strictly better neighbor in the remaining/adjacent row/column.}
+\end{enumerate}
+In case 1 the max is a peak and is returned.  In case 2 the higher neighbor is identified, and a recursive call is made (after a call cutting the other dimension in half) reducing the number of rows/columns to 1, which was discussed previously in this proof.
+\\Thus algorithm 4 will never recurse into an empty subproblem$\implies$ algorithm 4 always returns a location.
+
+2. If algorithm 4 returns a location it will be  a peak in the original problem.
+\\Suppose algorithm 4 returns a peak $(r,c)$ which is not a peak in the original problem.
+\\$(r,c)$ must have been a peak in a recursive subproblem if it is returned.  If it is not a peak in the original subproblem, then we can undo the recursive subproblems (move out of the recursive depth) to a level where $(r,c)$ is no longer a peak.  Notice the variable bestSeen records the highest value recorded thus far.  Call the location stored by bestSeen $(rb,cb)$.  For a return call to be made val$(r,c) \geq$ val(bestSeen).\\
+To not be a peak in a previous subproblem, one of the neighbors to $(r,b)$ must be greater than it. For it to be a peak of a smaller subproblem, the larger value must have lied on an edge (column/row) that was previously used to create the smaller subproblem (through division).  Call this better neighbor $(rt,ct)$.  In the process of creating the smaller subproblem, that column or row was checked for maxima with the call\\
+bestLoc = problem.getMaximum(divider,trace).
+\\There exist two cases for recursing into a subproblem with $(r,c)$.
+\\Case 1: There was a better neighbor along the dividing row.  We know this to be valse since val$(r,c) >$ val$(rt,ct)$ must be true for $(r,c)$ to be left in the subproblem.
+\\Case 2: There are no better neighbors, but the max value, which is $\geq (rt,ct) < (rb,cb)$
+Then val$(r,c) < $val$(rt,ct) \leq $val$(rb,cb) \leq$ val$(r,c)$.  This is a contradiction so neither case is valid.
+\\These cases are exhaustive from the line:
+\\if neighbor $==$ bestLoc and problem.get(bestLoc) $\geq=$ problem.get(bestSeen) $\ldots$ return bestLoc.
+So there is no scenario in which the location returned is not a peak in the original problem, nor is there a case in which no location is returned.  Thus a peak is always returned by algorithm 4.
 %%% PROBLEM 5 SOLUTION END %%%
 \fi
 
@@ -486,23 +528,7 @@ that is not a peak).
 
 \ifsolution \solution{}
 %%% PROBLEM 6 SOLUTION START %%%
-\begin{verbatim}
-problemMatrix = [
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0]
-]
-
-problemMatrix = [
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0]
-]
-\end{verbatim}
+see counterexample.py
 %%% PROBLEM 6 SOLUTION END %%%
 \fi
 
