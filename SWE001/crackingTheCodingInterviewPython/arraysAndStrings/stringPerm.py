@@ -1,5 +1,6 @@
 # Given two strings, write a method to decide if one is a permutation of the other.
 
+# my first attempt
 def makeTable(string):
 	dict = {}
 	for char in string:
@@ -24,4 +25,3 @@ def isPermutation(one,other):
 print isPermutation('pizza','zzpia')
 print isPermutation('pizza','pizzas')
 print isPermutation('pizza','salad')
-	
