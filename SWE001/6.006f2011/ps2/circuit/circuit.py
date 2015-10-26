@@ -9,7 +9,7 @@ import sys    # Used to smooth over the range / xrange issue.
 if sys.version_info >= (3,):
     xrange = range
 
-
+inf = 10**6
 # Circuit simulation library.
 
 class TruthTable:
@@ -341,56 +341,96 @@ class Transition:
         return id
 
 class PriorityQueue:
-    """Array-based priority queue implementation."""
+    """Heap- based instead of array based implementation"""
     def __init__(self):
         """Initially empty priority queue."""
-        self.queue = []
-        self.min_index = None
+        self.heap = []
+        self.heapSize = 0
     
     def __len__(self):
         # Number of elements in the queue.
-        return len(self.queue)
+        return len(self.heap)
+    
+    def isMinHeap(self):
+    	#tests min-heap property
+    	for i in range(1,len(self.A)):
+    		if self.heap[self.parent(i)] > self.heap[i]:
+    			return False
+    	return True
+    
+    def parent(self,i):
+    	return int(i/2)
+    
+    def left(self,i):
+    	return 2*i
+    def right(self,i):
+    	return 2*i + 1
+    def minHeapify(self,i):
+    	l = self.left(i)
+    	r = self.right(i)
+    	if l <= self.heapSize-1 and self.heap[l] < self.heap[i]:
+    		smallest = l
+    	else: smallest = i
+    	if r <= self.heapSize-1 and self.heap[r] < self.heap[smallest]:
+    		smallest = r
+    	if smallest != i:
+    		temp = self.heap[i]
+    		self.heap[i] = self.heap[smallest]
+    		self.heap[smallest] = temp
+    		self.minHeapify(smallest)
+    
+    def buildMinHeap(self):
+    	self.heapSize = len(self.heap)
+    	for i in range((int(len(self.heap)/2))-1,-1,-1):
+    		self.minHeapify(i)
+    def minimum(self):
+    	return self.heap[0]
+    
+    def extractMin(self):
+    	if self.heapSize < 1:
+    		raise ValueError('heap undeflow')
+    	min = self.heap[0]
+    	self.heap[0] = self.heap[self.heapSize-1]
+    	self.heap = self.heap[:-1]
+    	self.heapSize = self.heapSize - 1
+    	self.minHeapify(0)
+    	return min
+
+    def decreaseKey(self,i,key):
+#     	if key > self.A[i]:
+#     		raise valueError('new key is larger than current key')
+    	self.heap[i] = key
+    	while(i > 0 and self.heap[self.parent(i)] > self.heap[i]):
+    		temp = self.heap[i]
+    		self.heap[i] = self.heap[self.parent(i)]
+    		self.heap[self.parent(i)] = temp
+    		i = self.parent(i)
+    
+    def minHeapInsert(self,key):
+    	self.heapSize = self.heapSize + 1
+    	self.heap.append(inf)
+    	self.decreaseKey(self.heapSize-1,key)
     
     def append(self, key):
-        """Inserts an element in the priority queue."""
-        if key is None:
-            raise ValueError('Cannot insert None in the queue')
-        self.queue.append(key)
-        self.min_index = None
-    
+    	if key is None:
+    		raise ValueError('Cannot insert None in the queue')
+    	self.minHeapInsert(key)
+  		  
     def min(self):
         """The smallest element in the queue."""
-        if len(self.queue) == 0:
-            return None
-        self._find_min()
-        return self.queue[self.min_index]
-    
+        # the heap is sorted, so we have eliminated the need for _find_min()
+        return self.heap[0]
+
     def pop(self):
         """Removes the minimum element in the queue.
     
         Returns:
             The value of the removed element.
         """
-        if len(self.queue) == 0:
-            return None
-        self._find_min()
-        popped_key = self.queue.pop(self.min_index)
-        self.min_index = None
-        return popped_key
-    
-    def _find_min(self):
-        # Computes the index of the minimum element in the queue.
-        #
-        # This method may crash if called when the queue is empty.
-        if self.min_index is not None:
-            return
-        min = self.queue[0]
-        self.min_index = 0
-        for i in xrange(1, len(self.queue)):
-            key = self.queue[i]
-            if key < min:
-                min = key
-                self.min_index = i
+        # extract min from chapter 6 of the text
+        min = self.extractMin()
+        return min
+                
 
 class Simulation:
     """State needed to compute a circuit's state as it evolves over time."""
