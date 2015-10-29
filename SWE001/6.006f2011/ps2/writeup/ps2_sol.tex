@@ -17,25 +17,30 @@
 
 \newcommand{\collaborators}{ \textbf{Collaborators:}
 %%% COLLABORATORS START %%%
-None.
+Charlie Griffin
 %%% COLLABORATORS END %%%
 }
 
 \newcommand{\answerIa}{ \answer
 %%% PROBLEM 1(a) ANSWER START %%%
-0
+2.
+\\The depth of the recursion tree is n, see the attached figure for a graphical explanation.  The main idea is that at the 0th level SNOWFLAKE-EDGE is called 3 times, by SNOWFLAKE, then is recursively called 4 times for each level.  The recursive call decrements n by 1 until n reaches 0, so there are n levels.
 %%% PROBLEM 1(a) ANSWER END %%%
 }
 
 \newcommand{\answerIb}{ \answer
 %%% PROBLEM 1(b) ANSWER START %%%
-0
+4.
+\\$3\times 4^i$
+\\3 at level 0, 4 children for each node in each level $i$ such that $0\leq i \leq n-1$
 %%% PROBLEM 1(b) ANSWER END %%%
 }
 
 \newcommand{\answerIc}{ \answer
 %%% PROBLEM 1(c) ANSWER START %%%
-0
+2.\\
+$\Theta(1)$\\
+A triangle is drawn for each side that is split into 4 line segments.  This is exactly what SNOWFLAKE-EDGE does, and each SNOWFLAKE-EDGE call represents a node in the recursion tree, so we have $\Theta(1)$ per node.
 %%% PROBLEM 1(c) ANSWER END %%%
 }
 
