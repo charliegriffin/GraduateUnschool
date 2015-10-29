@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  28 OCT 2015 14:11
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  29 OCT 2015 13:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -160,19 +160,19 @@ Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 (./ps2_sol.aux)
 \openout1 = `ps2_sol.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 170.
-LaTeX Font Info:    ... okay on input line 170.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 170.
-LaTeX Font Info:    ... okay on input line 170.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 170.
-LaTeX Font Info:    ... okay on input line 170.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 170.
-LaTeX Font Info:    ... okay on input line 170.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 170.
-LaTeX Font Info:    ... okay on input line 170.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 170.
-LaTeX Font Info:    ... okay on input line 170.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 170.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 231.
+LaTeX Font Info:    ... okay on input line 231.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 231.
+LaTeX Font Info:    ... okay on input line 231.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 231.
+LaTeX Font Info:    ... okay on input line 231.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 231.
+LaTeX Font Info:    ... okay on input line 231.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 231.
+LaTeX Font Info:    ... okay on input line 231.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 231.
+LaTeX Font Info:    ... okay on input line 231.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 231.
 
  (/usr/local/texlive/2013/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
@@ -237,38 +237,38 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Font Info:    Try loading font information for U+lasy on input line 172.
+LaTeX Font Info:    Try loading font information for U+lasy on input line 233.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-Underfull \hbox (badness 10000) in paragraph at lines 172--172
+Underfull \hbox (badness 10000) in paragraph at lines 233--233
 
  []
 
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 172.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 233.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 174.
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 177.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 235.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 238.
 
 (/usr/local/texlive/2013/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 LaTeX Font Info:    Font shape `OT1/ptm/bx/it' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 210.
+(Font)              Font shape `OT1/ptm/b/it' tried instead on input line 271.
 
 <figures/snowflake.pdf, id=1, 266.59601pt x 192.72pt>
 File: figures/snowflake.pdf Graphic file (type pdf)
 
 <use figures/snowflake.pdf>
-Package pdftex.def Info: figures/snowflake.pdf used on input line 214.
+Package pdftex.def Info: figures/snowflake.pdf used on input line 275.
 (pdftex.def)             Requested size: 187.89912pt x 135.82938pt.
  [1
 
 {/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./figur
 es/snowflake.pdf>]
-Overfull \hbox (22.68976pt too wide) in paragraph at lines 253--253
+Overfull \hbox (22.68976pt too wide) in paragraph at lines 314--314
 | [] 
  []
 
@@ -276,54 +276,193 @@ Overfull \hbox (22.68976pt too wide) in paragraph at lines 253--253
 File: figures/snowflake-triangle.pdf Graphic file (type pdf)
 
 <use figures/snowflake-triangle.pdf>
-Package pdftex.def Info: figures/snowflake-triangle.pdf used on input line 292.
+Package pdftex.def Info: figures/snowflake-triangle.pdf used on input line 353.
 
 (pdftex.def)             Requested size: 93.94955pt x 108.24477pt.
- [2] [3 <./figures/snowflake-triangle.pdf>] [4] [5] [6] [7] <figures/xor-ansi.p
-df, id=47, 80.3pt x 40.15pt>
-File: figures/xor-ansi.pdf Graphic file (type pdf)
+ [2]
+<figures/recursionTree.png, id=26, 2442.12375pt x 873.2625pt>
+File: figures/recursionTree.png Graphic file (type png)
 
-<use figures/xor-ansi.pdf>
-Package pdftex.def Info: figures/xor-ansi.pdf used on input line 590.
+<use figures/recursionTree.png>
+Package pdftex.def Info: figures/recursionTree.png used on input line 368.
+(pdftex.def)             Requested size: 187.89912pt x 67.18411pt.
+ [3 <./figures/snowflake-triangle.pdf> <./figures/recursionTree.png>]
+
+! LaTeX Error: Bad math environment delimiter.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.408 \answerIe
+               
+? 
+! Missing \endgroup inserted.
+<inserted text> 
+                \endgroup 
+l.408 \answerIe
+               
+? 
+
+! LaTeX Error: \begin{equation} on input line 408 ended by \end{equation*}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.408 \answerIe
+               
+? 
+
+! LaTeX Error: Bad math environment delimiter.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.408 \answerIe
+               
+? 
+
+! LaTeX Error: \begin{list} on input line 359 ended by \end{equation}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.408 \answerIe
+               
+? 
+! Missing $ inserted.
+<inserted text> 
+                $
+l.408 \answerIe
+               
+? 
+! Display math should end with $$.
+<to be read again> 
+                   \endgroup 
+l.408 \answerIe
+               
+? 
+
+! LaTeX Error: \begin{problemparts} on input line 359 ended by \end{list}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.409 \end{problemparts}
+                        
+? 
+
+! LaTeX Error: \begin{list} on input line 263 ended by \end{problemparts}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.409 \end{problemparts}
+                        
+? 
+[4] [5] [6]
+Underfull \hbox (badness 10000) in paragraph at lines 530--531
+
+ []
+
+! Misplaced alignment tab character &.
+\answerIp ...e. There are $3(4^i)$ line segments &
+                                                   nodes as shown previously...
+l.551 \answerIp
+               
+? 
+[7] [8]
+Underfull \hbox (badness 10000) in paragraph at lines 609--609
+
+ []
+
+
+! LaTeX Error: Lonely \item--perhaps a missing list environment.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.615 \problem \points
+                      {60} \textbf{Digital Circuit Simulation}
+? 
+[9] <figures/xor-ansi.pdf, id=59, 80.3pt x 40.15pt>
+File: figures/xor-ansi.pdf Graphic file (type pdf)
+ <use figures/xor-ansi.pdf>
+Package pdftex.def Info: figures/xor-ansi.pdf used on input line 651.
 (pdftex.def)             Requested size: 80.29979pt x 40.14989pt.
- [8 <./figures/xor-ansi.pdf>]
-Overfull \hbox (15.04483pt too wide) in paragraph at lines 624--625
+
+Overfull \hbox (15.04483pt too wide) in paragraph at lines 685--686
 []\OT1/pcr/m/n/12 python -m cProfile -s time circuit.py < tests/5devadas13.in 
  []
 
-[9]
-Overfull \hbox (36.64482pt too wide) in paragraph at lines 694--695
+[10 <./figures/xor-ansi.pdf>] [11]
+Overfull \hbox (36.64482pt too wide) in paragraph at lines 755--756
 []\OT1/pcr/m/n/12 TRACE=jsonp python circuit.py < tests/1gate.in > circuit.json
 p 
  []
 
-[10] (./ps2_sol.aux) ) 
+
+! LaTeX Error: \begin{problems} on input line 263 ended by \end{list}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.778 \end{problems}
+                    
+? 
+
+! LaTeX Error: \begin{document} ended by \end{problems}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.778 \end{problems}
+                    
+? 
+! Extra \endgroup.
+<recently read> \endgroup 
+                          
+l.778 \end{problems}
+                    
+? 
+[12] (./ps2_sol.aux) ) 
 Here is how much of TeX's memory you used:
- 2635 strings out of 493315
- 34657 string characters out of 6137904
- 102932 words of memory out of 5000000
- 6029 multiletter control sequences out of 15000+600000
+ 2641 strings out of 493315
+ 34801 string characters out of 6137904
+ 106229 words of memory out of 5000000
+ 6034 multiletter control sequences out of 15000+600000
  24849 words of font info for 59 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,9n,23p,325b,373s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,9n,23p,375b,395s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2013/texmf-dist/fonts/enc/dvips/base/
-8r.enc}</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi1
-2.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.
-pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pf
-b></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><
-/usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></
-usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></u
-sr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></us
-r/local/texlive/2013/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/
-texlive/2013/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/20
-13/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2013/texmf-
-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2013/texmf-dist/fonts
-/type1/urw/times/utmr8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw
-/times/utmri8a.pfb>
-Output written on ps2_sol.pdf (10 pages, 175657 bytes).
+8r.enc}</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmex1
+0.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12
+.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.p
+fb></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
+></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></
+usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr
+/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/
+local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/l
+ocal/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/loc
+al/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/loca
+l/texlive/2013/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texliv
+e/2013/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2013/tex
+mf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2013/texmf-dist/f
+onts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1
+/urw/times/utmr8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/urw/times
+/utmri8a.pfb>
+Output written on ps2_sol.pdf (12 pages, 1993435 bytes).
 PDF statistics:
- 110 PDF objects out of 1000 (max. 8388607)
- 77 compressed objects within 1 object stream
+ 131 PDF objects out of 1000 (max. 8388607)
+ 91 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -24,7 +24,14 @@ Charlie Griffin
 \newcommand{\answerIa}{ \answer
 %%% PROBLEM 1(a) ANSWER START %%%
 2.
-\\The depth of the recursion tree is n, see the attached figure for a graphical explanation.  The main idea is that at the 0th level SNOWFLAKE-EDGE is called 3 times, by SNOWFLAKE, then is recursively called 4 times for each level.  The recursive call decrements n by 1 until n reaches 0, so there are n levels.
+\\The depth of the recursion tree is n, see the attached figure for a graphical explanation (Figure 3).  The main idea is that at the 0th level SNOWFLAKE-EDGE is called 3 times, by SNOWFLAKE, then is recursively called 4 times for each level.  The recursive call decrements n by 1 until n reaches 0, so there are n levels.
+\\
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.4\textwidth]{figures/recursionTree.png}
+\caption{The recursive calls made by SNOWFLAKE(n).}
+\label{fig:rt}
+\end{figure}
 %%% PROBLEM 1(a) ANSWER END %%%
 }
 
@@ -46,92 +53,146 @@ A triangle is drawn for each side that is split into 4 line segments.  This is e
 
 \newcommand{\answerId}{ \answer
 %%% PROBLEM 1(d) ANSWER START %%%
-0
+4.\\
+$\Theta(4^i)$\\
+There are $3\dot4^i$ nodes on level $i$ and $\Theta(1)$ triangles per node, as argued previously.  Multiplying these values together we get $\Theta(4^i)$ triangles on level $i$.
 %%% PROBLEM 1(d) ANSWER END %%%
 }
 \newcommand{\answerIe}{ \answer
 %%% PROBLEM 1(e) ANSWER START %%%
-0
+4. $\Theta(4^n)$\\
+The running time can be written in the form below:
+\begin{equation}
+\[
+T(n) =
+\begin{cases}
+	4T(n-1), & \text{if } x \geq 1\\
+	0,	     & \text{if } x = 0
+\end{cases}
+\]
+\end{equation}
+Writing this out recursively it becomes of order $\Theta(4^i)$.
 %%% PROBLEM 1(e) ANSWER END %%%
 }
 \newcommand{\answerIf}{ \answer
 %%% PROBLEM 1(f) ANSWER START %%%
-0
+2. n\\
+It is the same recursion tree as described in 1.a.
 %%% PROBLEM 1(f) ANSWER END %%%
 }
 \newcommand{\answerIg}{ \answer
 %%% PROBLEM 1(g) ANSWER START %%%
-0
+4. $3\times4^i$.\\
+The same reason as the previous problem.
 %%% PROBLEM 1(g) ANSWER END %%%
 }
 \newcommand{\answerIh}{ \answer
 %%% PROBLEM 1(h) ANSWER START %%%
-0
+1. 0\\
+Lines are only rendered at the last level.
 %%% PROBLEM 1(h) ANSWER END %%%
 }
 \newcommand{\answerIi}{ \answer
 %%% PROBLEM 1(i) ANSWER START %%%
-0
+2. $\Theta(1)$.\\
+There is $\Theta(1)$ line per node.
 %%% PROBLEM 1(i) ANSWER END %%%
 }
 \newcommand{\answerIj}{ \answer
 %%% PROBLEM 1(j) ANSWER START %%%
-0
+1. 0\\
+Line segments are only rendered at the last level.
 %%% PROBLEM 1(j) ANSWER END %%%
 }
 \newcommand{\answerIk}{ \answer
 %%% PROBLEM 1(k) ANSWER START %%%
-0
+4. $\Theta(4^n)$\\
+The number of line segments equals the number of nodes times the number of line segments per node.  Multiplying these values from the previous answers we get $\Theta(4^n)$.
 %%% PROBLEM 1(k) ANSWER END %%%
 }
 \newcommand{\answerIl}{ \answer
 %%% PROBLEM 1(l) ANSWER START %%%
-0
+4. $\Theta(4^n)$\\
+Cost is only from rendering.  This is only done in the last step, so it is the same as the previous answer.
 %%% PROBLEM 1(l) ANSWER END %%%
 }
 \newcommand{\answerIm}{ \answer
 %%% PROBLEM 1(m) ANSWER START %%%
-0
+2. $n$\\
+Same recursion tree as before, only the rendering has changed.  This explanation applies for the next few answers as well.
 %%% PROBLEM 1(m) ANSWER END %%%
 }
 \newcommand{\answerIn}{ \answer
 %%% PROBLEM 1(n) ANSWER START %%%
-0
+4. $3\times 4^{i}$\\
 %%% PROBLEM 1(n) ANSWER END %%%
 }
 \newcommand{\answerIo}{ \answer
 %%% PROBLEM 1(o) ANSWER START %%%
-0
+1. 0.\\
+The rendering only takes place at the last level.
 %%% PROBLEM 1(o) ANSWER END %%%
 }
 \newcommand{\answerIp}{ \answer
 %%% PROBLEM 1(p) ANSWER START %%%
-0
+4. $\Theta(\frac{1}{3}^n)$\\
+This question asks what is the length of a single line segment since it is proportional to the running time.  There are $3(4^i)$ line segments & nodes as shown previously.  Each level splits a side into 4 line segments that are $\frac{1}{3}$ the length of the segment that was just split.  So the line segment length at each level is decreased by a factor of 3.
 %%% PROBLEM 1(p) ANSWER END %%%
 }
 \newcommand{\answerIq}{ \answer
 %%% PROBLEM 1(q) ANSWER START %%%
-0
+1. 0\\
+Rendering only happens at the last step.
 %%% PROBLEM 1(q) ANSWER END %%%
 }
 \newcommand{\answerIr}{ \answer
 %%% PROBLEM 1(r) ANSWER START %%%
-0
+3. $\Theta(\frac{4}{3}^n)$\\
+Each line is split into 4 line segments that are $\frac{1}{3}$ the length of the original line.
 %%% PROBLEM 1(r) ANSWER END %%%
 }
 \newcommand{\answerIs}{ \answer
 %%% PROBLEM 1(s) ANSWER START %%%
-0
+3. $\Theta(\frac{4}{3}^n)$\\
+Rendering only happens at the last step, so it is the sum of the previous two answers.
 %%% PROBLEM 1(s) ANSWER END %%%
 }
 \newcommand{\answerIt}{ \answer
 %%% PROBLEM 1(t) ANSWER START %%%
-0
+1. $\Theta(1)$\\
+Runtime equals the number of triangles times the surface area of the triangles.  From p, the side length of the triangles is proportional to $\Theta(\frac{1}{3}^n)$, and there are about $9^{n}$ triangles.  Multiplying the first term squared (to get surface area) times the second, we get an answer on the order of constant time.
 %%% PROBLEM 1(t) ANSWER END %%%
 }
 \newcommand{\answerIu}{ \answer
 %%% PROBLEM 1(u) ANSWER START %%%
-Your proof in latex.
+Proof:\\
+There are $n$ levels in the tree, each with $3(4)^i$ nodes, for $0 \leq i \leq n$.\\
+Each node at level $i$ has $\Theta(1)$ triangle as argued in part c.\\
+The side length of these triangles is $\Theta(\frac{1}{3}^{i+1})$ as argued in part p.\\
+The surface area of a triangle is $\Theta(l^2)$ as assumed in part t.\\
+There is no rendering at the last level $n$.\\
+The rendering time is proportional to the total surface area, as explained in the problem statement.\\
+\begin{equation}
+T(n) = \Sigma_{i=1}^{n-1}(\text{surface area from the triangles produced at level $i$})
+\end{equation}
+\begin{equation}
+T(n) = \Sigma_{i=1}^{n-1}(\text{number of triangles at level $i$})(\text{side length of triangles at level $i$})^2
+\end{equation}
+\begin{equation}
+T(n) = \Sigma_{i=1}^{n-1}\Theta(3(4^i))\Theta(\frac{1}{3}^i)^2
+\end{equation}
+\begin{equation}
+T(n) = \Theta \left(\Sigma_{i=1}^{n-1}(3\times\frac{4^i}{9})\right)
+\end{equation}
+\begin{equation}
+T(n) = 3\times \Theta\left(\Sigma_{i=1}^{n-1}(\frac{4^i}{9})\right)
+\end{equation}
+This is a geometric series, and is bounded above by $3\left(\frac{1}{1-\frac{4}{9}}\right)=\frac{27}{5}$.\\
+The running time can be bounded as shown below, demonstrating that is it constant.
+\begin{equation}
+\frac{4}{3} \leq T(n) \leq \frac{27}{5}
+\end{equation}
+
 %%% PROBLEM 1(u) ANSWER END %%%
 }
 \newcommand{\answerIIa}{ \answer 
