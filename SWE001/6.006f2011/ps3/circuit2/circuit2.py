@@ -161,6 +161,11 @@ class RangeIndex(object):
   def count(self, first_key, last_key):
     """Number of keys that fall within [first_key, last_key]."""
     result = 0
+    print "keys are:"
+    print first_key
+    for key in self.data:
+    	print key
+    	print key <= first_key
     for key in self.data:
       if first_key <= key <= last_key:
         result += 1
