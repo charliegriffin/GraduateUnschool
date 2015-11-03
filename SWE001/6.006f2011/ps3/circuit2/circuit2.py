@@ -34,6 +34,7 @@ class BSTNode(object):
         self.parent = parent
         self.left = None
         self.right = None
+        self.gamma = 0
   
     def _str(self):
         """Internal method for ASCII art."""
@@ -349,6 +350,13 @@ class BST(object):
 
 class AVL(BST):
 
+    def updateGamma(self,x):
+        if x.left == None: leftGamma = 0
+        else: leftGamma = x.left.gamma
+        if x.right == None: rightGamma = 0
+        else: rightGamma = x.right.gamma
+        x.gamma = 1 + rightGamma + leftGamma
+        
     def left_rotate(self, x):
         y = x.right
         y.parent = x.parent
@@ -366,6 +374,8 @@ class AVL(BST):
         x.parent = y
         update_height(x)
         update_height(y)
+        self.updateGamma(x)
+        self.updateGamma(y)
 
     def right_rotate(self, x):
         y = x.left
@@ -384,10 +394,13 @@ class AVL(BST):
         x.parent = y
         update_height(x)
         update_height(y)
+        self.updateGamma(x)
+        self.updateGamma(y)
 
     def rebalance(self, node):
         while node is not None:
             update_height(node)
+            self.updateGamma(node)
             if height(node.left) >= 2 + height(node.right):
                 if height(node.left.left) >= height(node.left.right):
                     self.right_rotate(node)
