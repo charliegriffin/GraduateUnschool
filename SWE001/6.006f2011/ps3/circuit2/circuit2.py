@@ -564,24 +564,36 @@ class RangeIndex(object):
   
   def __init__(self):
     """Initially empty range index."""
+    print 'initalize:'
     self.data = []
+    self.avl = AVL()
   
   def add(self, key):
     """Inserts a key in the range index."""
+    print 'add:'
     if key is None:
         raise ValueError('Cannot insert nil in the index')
     self.data.append(key)
+    self.avl.insert(key)
+    print 'data =',self.data
+    print 'avl = ',self.avl
   
   def remove(self, key):
     """Removes a key from the range index."""
+    print 'remove:'
     self.data.remove(key)
+    self.avl.delete(key)
+    print 'data = ', self.data
+    print 'avl = ', self.avl
   
   def list(self, first_key, last_key):
     """List of values for the keys that fall within [first_key, last_key]."""
+    print 'list:'
     return [key for key in self.data if first_key <= key <= last_key]
   
   def count(self, first_key, last_key):
     """Number of keys that fall within [first_key, last_key]."""
+    print 'count:'
     result = 0
 #   here I make an AVL tree out of the keys
     tree = AVL()
@@ -592,6 +604,7 @@ class RangeIndex(object):
     for key in self.data:
       if first_key <= key <= last_key:
         result += 1
+    print result
     return result
 
 
