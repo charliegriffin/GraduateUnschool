@@ -603,6 +603,22 @@ class RangeIndex(object):
     """List of values for the keys that fall within [first_key, last_key]."""
     print 'list:'
     return [key for key in self.data if first_key <= key <= last_key]
+
+  def rank(self, key):
+    # returns the number of keys in the AVL <= k
+    # runtime O(logN)
+    r = 0
+    node = tree.root
+    while node != None:
+      if k < node.key: node = node.left
+      else:
+        if node.left != None:
+          r = r + 1 + node.left.gamma
+        else: r = r + 1
+        if node.key == k:
+          return r
+        node = node.right
+    return r
   
   def count(self, first_key, last_key):
     """Number of keys that fall within [first_key, last_key]."""
