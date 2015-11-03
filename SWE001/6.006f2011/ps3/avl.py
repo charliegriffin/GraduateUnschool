@@ -472,6 +472,33 @@ def count(tree,l,h):
     elif lbNode == None:
         return rank(tree,h) - rank(tree,l)
 
+def LCA(tree,l,h):
+    # returns the lowest common ancestor of l and h
+    node = tree.root
+    while node != None and (l > node.key and h < node.key):
+        if l < node.key:
+            node = node.left
+        else:
+            node = node.right
+    return node
+    
+def nodeList(node,l,h,result):
+    if node == None:
+        return
+    if l <= node.key and node.key <= h:
+    	result.append(node.key)
+    if node.key >= l:
+        nodeList(node.left,l,h,result)
+    if node.key <= h:
+        nodeList(node.right,l,h,result)
+        
+def list(tree,l,h):
+    # returns a list of the keys between l and h
+    lca = LCA(tree,l,h)
+    result = []
+    nodeList(lca,l,h,result)
+    return result
+
   # this is the example tree from the problem set      
 def testAvl():
 	tree = AVL()
@@ -516,4 +543,13 @@ def testCount():
 	print count(tree,100,0), '\t\t\tshould be 0'
 	print count(tree,50,50), '\t\t\tshould be 1'
 
-testCount()
+def testList():
+	tree = testAvl()
+	print count(tree,0,100) == len(list(tree,0,100))
+	print count(tree,19,62) == len(list(tree,19,62))
+	print count(tree,50,50) == len(list(tree,50,50))
+	print list(tree,19,62)
+	print list(tree,0,100)
+	print list(tree,50,50)
+	
+testList()
