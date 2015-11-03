@@ -594,19 +594,18 @@ class RangeIndex(object):
   def count(self, first_key, last_key):
     """Number of keys that fall within [first_key, last_key]."""
     print 'count:'
+    # array implementation
     result = 0
-#   here I make an AVL tree out of the keys
-    tree = AVL()
-    for key in self.data:	# this loop makes the keys into an AVL tree, it's that simple
-      tree.insert(key)
-#     print tree
-    # tomorrow, do this    
     for key in self.data:
       if first_key <= key <= last_key:
         result += 1
-    print result
+    print 'result = ',result
+    # avl implementation
+#     if first_key >= last_key:
+#     	avlResult = 0
+#     else:
+#     	print 'root = ',self.avl.root
     return result
-
 
   
 class TracedRangeIndex(RangeIndex):
