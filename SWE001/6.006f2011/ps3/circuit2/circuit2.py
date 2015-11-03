@@ -577,27 +577,23 @@ class RangeIndex(object):
   
   def __init__(self):
     """Initially empty range index."""
-    print 'initalize:'
+#     print 'initalize:'
     self.data = []
     self.avl = AVL()
   
   def add(self, key):
     """Inserts a key in the range index."""
-    print 'add:'
+#     print 'add:'
     if key is None:
         raise ValueError('Cannot insert nil in the index')
     self.data.append(key)
     self.avl.insert(key)
-    print 'data =',self.data
-    print 'avl = ',self.avl
   
   def remove(self, key):
     """Removes a key from the range index."""
-    print 'remove:'
+#     print 'remove:'
     self.data.remove(key)
     self.avl.delete(key)
-    print 'data = ', self.data
-    print 'avl = ', self.avl
   
   def list(self, first_key, last_key):
     """List of values for the keys that fall within [first_key, last_key]."""
@@ -608,33 +604,37 @@ class RangeIndex(object):
     # returns the number of keys in the AVL <= k
     # runtime O(logN)
     r = 0
-    node = tree.root
+    node = self.avl.root
     while node != None:
-      if k < node.key: node = node.left
+      if key < node.key: node = node.left
       else:
         if node.left != None:
           r = r + 1 + node.left.gamma
         else: r = r + 1
-        if node.key == k:
+        if node.key == key:
           return r
         node = node.right
     return r
-  
+
   def count(self, first_key, last_key):
     """Number of keys that fall within [first_key, last_key]."""
     print 'count:'
     # array implementation
-    result = 0
-    for key in self.data:
-      if first_key <= key <= last_key:
-        result += 1
-    print 'result = ',result
+#     result = 0
+#     for key in self.data:
+#       if first_key <= key <= last_key:
+#         result += 1
     # avl implementation
-#     if first_key >= last_key:
-#     	avlResult = 0
-#     else:
-#     	print 'root = ',self.avl.root
-    return result
+    # O(logN)
+    if first_key > last_key:  return 0
+    lbNode = self.avl.find(first_key)
+    ubNode = self.avl.find(last_key)
+    if lbNode != None:
+#         return self.rank(h) - self.rank(l) + 1
+        return self.rank(last_key) - self.rank(first_key) + 1
+    elif lbNode == None:
+        return self.rank(last_key) - self.rank(first_key)
+#     return result
 
   
 class TracedRangeIndex(RangeIndex):
