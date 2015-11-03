@@ -597,7 +597,7 @@ class RangeIndex(object):
   
   def list(self, first_key, last_key):
     """List of values for the keys that fall within [first_key, last_key]."""
-    print 'list:'
+#     print 'list:'
     return [key for key in self.data if first_key <= key <= last_key]
 
   def rank(self, key):
@@ -618,23 +618,23 @@ class RangeIndex(object):
 
   def count(self, first_key, last_key):
     """Number of keys that fall within [first_key, last_key]."""
-    print 'count:'
+#     print 'count:'
     # array implementation
-#     result = 0
-#     for key in self.data:
-#       if first_key <= key <= last_key:
-#         result += 1
+    result = 0
+    for key in self.data:
+      if first_key <= key <= last_key:
+        result += 1
     # avl implementation
     # O(logN)
-    if first_key > last_key:  return 0
-    lbNode = self.avl.find(first_key)
-    ubNode = self.avl.find(last_key)
-    if lbNode != None:
-#         return self.rank(h) - self.rank(l) + 1
-        return self.rank(last_key) - self.rank(first_key) + 1
-    elif lbNode == None:
-        return self.rank(last_key) - self.rank(first_key)
-#     return result
+#     if first_key > last_key:  return 0
+#     lbNode = self.avl.find(first_key)
+#     ubNode = self.avl.find(last_key)
+#     if lbNode != None:
+# #         return self.rank(h) - self.rank(l) + 1
+#         return self.rank(last_key) - self.rank(first_key) + 1
+#     elif lbNode == None:
+#         return self.rank(last_key) - self.rank(first_key)
+    return result
 
   
 class TracedRangeIndex(RangeIndex):
