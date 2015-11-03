@@ -2,6 +2,28 @@
 
 #!/usr/bin/env python
 
+import random
+
+def height(node):
+    if node is None:
+        return -1
+    else:
+        return node.height
+
+def update_height(node):
+    node.height = max(height(node.left), height(node.right)) + 1
+
+
+# def height(node):
+#     if node is None:
+#         return -1
+#     else:
+#         return node.height
+# 
+# def update_height(node):
+#     node.height = max(height(node.left), height(node.right)) + 1
+
+
 class BSTNode(object):
     """A node in the vanilla BST tree."""
     
@@ -331,15 +353,6 @@ class BST(object):
 
 class AVL(BST):
 
-    def height(self,node):
-        if node is None:
-            return -1
-        else:
-            return node.height
-   
-    def update_height(self,node):
-        self.node.height = max(height(node.left), height(node.right)) + 1
-
     def left_rotate(self, x):
         y = x.right
         y.parent = x.parent
@@ -419,3 +432,15 @@ class AVL(BST):
         ## node.parent is actually the old parent of the node,
         ## which is the first potentially out-of-balance node.
         self.rebalance(node.parent)
+
+ 
+        
+
+        
+def testAvl():
+	tree = AVL()
+	for i in range(20):
+		tree.insert(int(100*random.random()))
+	print tree
+	
+testAvl()
