@@ -578,7 +578,7 @@ class RangeIndex(object):
   def __init__(self):
     """Initially empty range index."""
 #     print 'initalize:'
-    self.data = []
+#     self.data = []
     self.avl = AVL()
   
   def add(self, key):
@@ -586,20 +586,47 @@ class RangeIndex(object):
 #     print 'add:'
     if key is None:
         raise ValueError('Cannot insert nil in the index')
-    self.data.append(key)
+#     self.data.append(key)
     self.avl.insert(key)
   
   def remove(self, key):
     """Removes a key from the range index."""
 #     print 'remove:'
-    self.data.remove(key)
+#     self.data.remove(key)
     self.avl.delete(key)
+
+  def LCA(self,l,h):
+  # returns the lowest common ancestor of l and h
+    node = self.avl.root
+    while node != None and (l > node.key or h < node.key):
+      if l < node.key:
+        node = node.left
+      else:
+        node = node.right
+    return node
+  
+  def nodeList(self,node,l,h,result):
+    if node == None:
+      return
+    if l <= node.key and node.key <= h:
+      result.append(node.key)
+    if node.key >= l:
+      self.nodeList(node.left,l,h,result)
+    if node.key <= h:
+      self.nodeList(node.right,l,h,result)
   
   def list(self, first_key, last_key):
     """List of values for the keys that fall within [first_key, last_key]."""
 #     print 'list:'
-    return [key for key in self.data if first_key <= key <= last_key]
-
+#     arrayList = [key for key in self.data if first_key <= key <= last_key]
+    lca = self.LCA(first_key,last_key)
+    result = []
+    self.nodeList(lca,first_key,last_key,result)
+    return result
+#     print 'arrayList = ',arrayList
+#     print 'result = ',result
+#     return arrayList
+	
   def rank(self, key):
     # returns the number of keys in the AVL <= k
     # runtime O(logN)
@@ -620,20 +647,20 @@ class RangeIndex(object):
     """Number of keys that fall within [first_key, last_key]."""
 #     print 'count:'
     # array implementation
-    result = 0
-    for key in self.data:
-      if first_key <= key <= last_key:
-        result += 1
+#     result = 0
+#     for key in self.data:
+#       if first_key <= key <= last_key:
+#         result += 1
     # avl implementation
     # O(logN)
-#     if first_key > last_key:  return 0
-#     lbNode = self.avl.find(first_key)
-#     ubNode = self.avl.find(last_key)
-#     if lbNode != None:
-# #         return self.rank(h) - self.rank(l) + 1
-#         return self.rank(last_key) - self.rank(first_key) + 1
-#     elif lbNode == None:
-#         return self.rank(last_key) - self.rank(first_key)
+    if first_key > last_key:  return 0
+    lbNode = self.avl.find(first_key)
+    ubNode = self.avl.find(last_key)
+    if lbNode != None:
+#         return self.rank(h) - self.rank(l) + 1
+        return self.rank(last_key) - self.rank(first_key) + 1
+    elif lbNode == None:
+        return self.rank(last_key) - self.rank(first_key)
     return result
 
   

@@ -475,7 +475,7 @@ def count(tree,l,h):
 def LCA(tree,l,h):
     # returns the lowest common ancestor of l and h
     node = tree.root
-    while node != None and (l > node.key and h < node.key):
+    while node != None and (l > node.key or h < node.key):
         if l < node.key:
             node = node.left
         else:
