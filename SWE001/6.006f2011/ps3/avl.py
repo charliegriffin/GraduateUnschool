@@ -461,6 +461,17 @@ def rank(tree,k):
             node = node.right
     return r
 
+def count(tree,l,h):
+    # returns the number of keys k, s.t. l <= k <=h
+    # O(logN)
+    if l > h: return 0
+    lbNode = tree.find(l)
+    ubNode = tree.find(h)
+    if lbNode != None:
+        return rank(tree,h) - rank(tree,l) + 1
+    elif lbNode == None:
+        return rank(tree,h) - rank(tree,l)
+
   # this is the example tree from the problem set      
 def testAvl():
 	tree = AVL()
@@ -496,4 +507,13 @@ def testRank():
     print rank(tree,1),  '\t\t\tshould be 0'
     print rank(tree,7),  '\t\t\tshould be 1'
 
-testRank()
+def testCount():
+	tree = testAvl()
+	print count(tree,0,100), '\t\t\tshould be 10'
+	print count(tree,7,87),  '\t\t\tshould be 10'
+	print count(tree,8,87),  '\t\t\tshould be 9'
+	print count(tree,19,62), '\t\t\tshould be 5'
+	print count(tree,100,0), '\t\t\tshould be 0'
+	print count(tree,50,50), '\t\t\tshould be 1'
+
+testCount()
