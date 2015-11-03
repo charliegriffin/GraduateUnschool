@@ -446,8 +446,20 @@ class AVL(BST):
         ## which is the first potentially out-of-balance node.
         self.rebalance(node.parent)
 
- 
-        
+def rank(tree,k):
+    # O(logN) runtime algorithm for returning the number of keys in the index <= k
+    r = 0
+    node = tree.root
+    while node != None:
+        if k < node.key: node = node.left
+        else:
+            if node.left != None:
+                r = r + 1 + node.left.gamma
+            else: r = r + 1
+            if node.key == k:
+                return r
+            node = node.right
+    return r
 
   # this is the example tree from the problem set      
 def testAvl():
@@ -464,15 +476,24 @@ def testAvl():
 	tree.insert(31)
 	return tree
 
-def testRank():
+def testGamma():
 	tree = testAvl()
 	n4 = tree.find(7)
-	print n4.gamma, '\t\t\tshould be 1'
+# 	print n4.gamma, '\t\t\tshould be 1'
 	n3 = tree.find(13)
-	print n3.gamma, '\t\t\tshould be 3'
+# 	print n3.gamma, '\t\t\tshould be 3'
 	n2 = tree.find(25)
-	print n2.gamma, '\t\t\tshould be 6'
+# 	print n2.gamma, '\t\t\tshould be 6'
 	n1 = tree.find(50)
-	print n1.gamma, '\t\t\tshould be 10'
+# 	print n1.gamma, '\t\t\tshould be 10'
 	
+def testRank():
+    tree = testAvl()
+    print rank(tree,50), '\t\t\tshould be 7'
+    print rank(tree,49), '\t\t\tshould be 6'
+    print rank(tree,25), '\t\t\tshould be 4'
+    print rank(tree,100),'\t\t\tshould be 10'
+    print rank(tree,1),  '\t\t\tshould be 0'
+    print rank(tree,7),  '\t\t\tshould be 1'
+
 testRank()
