@@ -4,24 +4,24 @@ import unittest
 from dnaseqlib import *
 
 ### Utility classes ###
-class RollingHash:
-    def __init__(self,s):
-        self.hashbase = 4 # since there are 4 dna letters
-        self.seqlen = len(s)
-        n = self.seqlen - 1
-        h = 0
-        for c in s:
-            h += ord(c) * (self.hashbase ** n)
-            n -= 1
-        self.curhash = h
-    
-    def hash(self):
-        return self.curhash
-        
-    def slide(self,prev,next):
-        self.curhash = self.hashbase*self.curhash + ord(next)
-        self.curhash -= (self.hashbase**self.seqlen)*ord(prev)
-        return self.curhash
+# class RollingHash:
+#     def __init__(self,s):
+#         self.hashbase = 4 # since there are 4 dna letters
+#         self.seqlen = len(s)
+#         n = self.seqlen - 1
+#         h = 0
+#         for c in s:
+#             h += ord(c) * (self.hashbase ** n)
+#             n -= 1
+#         self.curhash = h
+#     
+#     def hash(self):
+#         return self.curhash
+#         
+#     def slide(self,prev,next):
+#         self.curhash = self.hashbase*self.curhash + ord(next)
+#         self.curhash -= (self.hashbase**self.seqlen)*ord(prev)
+#         return self.curhash
 
 
 # Maps integer keys to a set of arbitrary values.
@@ -42,7 +42,15 @@ class Multidict:
 # and their hashes.  (What else do you need to know about each
 # subsequence?)
 def subsequenceHashes(seq, k):
-    raise Exception("Not implemented!")
+    subseq = seq[:k]
+    roller = RollingHash(subseq)
+    yield (subseq,roller.current_hash())
+    for i in range(len(seq)-k):
+        prev = subseq[0]
+        next = seq[i+k]
+        roller.slide(subseq[0],next)
+        subseq = subseq[1:] + next
+        yield (subseq,roller.current_hash())
 
 # Similar to subsequenceHashes(), but returns one k-length subsequence
 # every m nucleotides.  (This will be useful when you try to use two
@@ -58,6 +66,13 @@ def getExactSubmatches(a, b, k, m):
     raise Exception("Not implemented!")
 
 if __name__ == '__main__':
+    seq = 'ABCDABCDABCDABCDABCDABCD'
+    # subsequenceHashes(seq,4)
+    # subsequenceHashes(seq,2)
+    hashes = subsequenceHashes(seq,12)
+    for subseq, hash in hashes:
+	    print subseq, hash
+    
     if len(sys.argv) != 4:
         print 'Usage: {0} [file_a.fa] [file_b.fa] [output.png]'.format(sys.argv[0])
         sys.exit(1)

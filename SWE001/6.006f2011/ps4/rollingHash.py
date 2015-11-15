@@ -18,4 +18,5 @@ class RollingHash:
 	def slide(self,prev,next):
 		self.curhash = self.hashbase*self.curhash + ord(next)
 		self.curhash -= pow(self.hashbase,self.seqlen)*ord(prev)
+		return self.curhash
 		
