@@ -4,6 +4,8 @@ import unittest
 from dnaseqlib import *
 
 ### Utility classes ###
+# I wrote this myself, but later found the RollingHash in the dnaseqlib, and 
+# decided to use that so my results are as consistent with the tests as possible
 # class RollingHash:
 #     def __init__(self,s):
 #         self.hashbase = 4 # since there are 4 dna letters
