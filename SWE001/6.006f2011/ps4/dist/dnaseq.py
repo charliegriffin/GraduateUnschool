@@ -31,28 +31,38 @@ class Multidict:
     # Initializes a new multi-value dictionary, and adds any key-value
     # 2-tuples in the iterable sequence pairs to the data structure.
     def __init__(self, pairs=[]):
-        raise Exception("Not implemented!")
+        self.dict = {}
+        for key, value in pairs:
+			self.put(key,value)
+
     # Associates the value v with the key k.
     def put(self, k, v):
-        raise Exception("Not implemented!")
+        if k not in self.dict.keys():
+            self.dict[k] = [v]
+        else:
+            self.dict[k].append(v)
     # Gets any values that have been associated with the key k; or, if
     # none have been, returns an empty sequence.
     def get(self, k):
-        raise Exception("Not implemented!")
+        if k in self.dict.keys():
+            return self.dict[k]
+        else:
+            return []
 
 # Given a sequence of nucleotides, return all k-length subsequences
 # and their hashes.  (What else do you need to know about each
 # subsequence?)
 def subsequenceHashes(seq, k):
+    position = 0
     subseq = seq[:k]
     roller = RollingHash(subseq)
-    yield (subseq,roller.current_hash())
+    yield (roller.current_hash(),(subseq,position))
     for i in range(len(seq)-k):
-        prev = subseq[0]
+        position += 1
         next = seq[i+k]
         roller.slide(subseq[0],next)
         subseq = subseq[1:] + next
-        yield (subseq,roller.current_hash())
+        yield (roller.current_hash(),(subseq,position))
 
 # Similar to subsequenceHashes(), but returns one k-length subsequence
 # every m nucleotides.  (This will be useful when you try to use two
@@ -65,15 +75,39 @@ def intervalSubsequenceHashes(seq, k, m):
 # that return nucleotides.  The table is built by computing one hash
 # every m nucleotides (for m >= k).
 def getExactSubmatches(a, b, k, m):
-    raise Exception("Not implemented!")
+    subSeqDict = Multidict(pairs=list(subsequenceHashes(a,k)))
+    for hash, (seq,pos) in subsequenceHashes(b,k):
+        for asubseq, apos in subSeqDict.get(hash):
+            if asubseq != seq:
+                continue
+            yield (apos,pos)
+    return
+
+def testMultiDict():
+    md = Multidict(pairs=[(1,'a'),(2,'b')])
+    md.put(1,'z')
+    md.put(3,'c')
+    print md.get(1)
+    print md.get(7)
+    print md.dict
+    
+def testGetExact():
+    a = 'zzzzzzzwinstonzzzzzzz'
+    b = 'xxxxxxxwinstonxxxxxxx'
+    k = len('winston')
+    exact = getExactSubmatches(a,b,k,0)
+    for apos, bpos in exact:
+        print apos,bpos,'\t\t\tshould be 7 7'
+    c = 'abcabcabc'
+    d = 'abcdefghi'
+    em = getExactSubmatches(c,d,3,0)
+    for apos, bpos in em:
+        print apos, bpos 
+    print 'should be:\n0 0\n3 0\n6 0'
+    
 
 if __name__ == '__main__':
-    seq = 'ABCDABCDABCDABCDABCDABCD'
-    # subsequenceHashes(seq,4)
-    # subsequenceHashes(seq,2)
-    hashes = subsequenceHashes(seq,12)
-    for subseq, hash in hashes:
-	    print subseq, hash
+    testGetExact()
     
     if len(sys.argv) != 4:
         print 'Usage: {0} [file_a.fa] [file_b.fa] [output.png]'.format(sys.argv[0])
