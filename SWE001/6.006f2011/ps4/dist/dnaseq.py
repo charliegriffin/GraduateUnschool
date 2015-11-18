@@ -93,7 +93,6 @@ def intervalSubsequenceHashes(seq, k, m):
 # that return nucleotides.  The table is built by computing one hash
 # every m nucleotides (for m >= k).
 def getExactSubmatches(a, b, k, m):
-    print 'k = ',k,',m = ',m
     print 'building table ...'
     subSeqDict = Multidict(pairs=intervalSubsequenceHashes(a,k,m))
     print 'table complete'
