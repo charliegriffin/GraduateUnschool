@@ -249,16 +249,6 @@ class BigNum(object):
     if not isinstance(other, BigNum):
       return NotImplemented  # BigNums can only be multiplied by BigNums.    
     if len(self.d) <= 64 or len(other.d) <= 64:
-#       print 'testing slow_mul'
-      product = self.fast_mul(other)
-      slowProduct = self.slow_mul(other)
-#       print product, slowProduct
-      if product == slowProduct:
-#         print 'slow_mul successfully worked'
-        return slowProduct
-      else:
-        print product, '!=', slowProduct
-        return product
       return self.slow_mul(other)
     return self.fast_mul(other)
 
@@ -272,7 +262,10 @@ class BigNum(object):
     for i in range(n):
       carry = Byte.zero()
       for j in range(n):
-        digit = self.d[i]*other.d[j]+result.d[i+j].word()+carry.word()
+        if i < len(self.d) and j < len(other.d):
+          digit = self.d[i]*other.d[j]+result.d[i+j].word()+carry.word()
+        else:
+          digit = result.d[i+j].word()+carry.word()
         result.d[i+j] = digit.lsb()
         carry = digit.msb()
       result.d[i+n]=carry
