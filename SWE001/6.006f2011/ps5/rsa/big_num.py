@@ -270,32 +270,6 @@ class BigNum(object):
         carry = digit.msb()
       result.d[i+n]=carry
     return result.normalize()
-#     result = BigNum.zero(1 + max(len(self.d), len(other.d)))
-#     carry = Byte.zero()
-#     for i in xrange(0, len(result.d)):
-#       if i < len(self.d):
-#         a = self.d[i] + carry
-#       else:
-#         a = carry.word()
-#       if i < len(other.d):
-#         b = other.d[i].word()
-#       else:
-#         b = Word.zero()
-#       word = a + b
-#       result.d[i] = word.lsb()
-#       carry = word.msb()
-#     return result.normalize()
-
-#     inDigits = max(len(self.d),len(other.d))
-#     for i in range(inDigits):
-#       carry = 0
-#       for j in range(inDigits):
-#         digit = self.d[i]*other.d[j]+str(C[i+j-3]) + str(carry)
-#         C[i+j-1] = LSB(digit)
-#         carry = MSB(digit)
-#       C[i+inDigit] = carry
-#     return C
-#    return self.fast_mul(other)
 
   def fast_mul(self, other):
     '''
@@ -354,7 +328,18 @@ class BigNum(object):
     '''
     Slow method for dividing two numbers w/ good constant factors.
     '''
-    return self.fast_divmod(other)
+    n = max(len(self.d),len(other.d))
+    q = BigNum.zero(n)
+    r = BigNum(self.d)
+    s = [BigNum(other.d)]
+    while s[-1] < r:
+      s.append((s[-1] + s[-1]).normalize())
+    for j in range(len(s)-1,-1,-1):
+      q = (q + q).normalize()
+      if not r < s[j]:
+        r = (r - s[j]).normalize()
+        q.d[0] |= Byte.one()
+    return (q.normalize(),r)
 
   def fast_divmod(self, other):
     '''
