@@ -9,10 +9,13 @@ def shortest_path(start, end):
     Each move can be applied using rubik.perm_apply
     """
     level = {start:0}
+    backLevel = {end:0}
     parent = {start:None}
+    backParent = {end:None}
     i = 1
     frontier = [start]
     solution = []
+    backFrontier = [end]
     while end not in level:              # explore graph
 #         print frontier
         next = []
@@ -27,6 +30,15 @@ def shortest_path(start, end):
                     parent[v] = (u,move)
                     next.append(v)
         frontier = next
+        backNext = []
+        for u in backFrontier:
+            for move in rubik.quarter_twists:
+                v = rubik.perm_apply(move,u)
+                if v not in backLevel:
+                    backLevel[v] = i
+                    backParent[u] = (v,rubik.perm_inverse(move))
+                    backNext.append(v)
+        backFrontier = backNext
         i += 1
     newEnd = end
     for i in range(level[end]):
@@ -34,6 +46,13 @@ def shortest_path(start, end):
          solution.append(move)
          newEnd = pos
     solution.reverse()# = reversed(solution)
+    backSol = []
+    newEnd = end
+    for i in range(backLevel[start]):
+        (pos,move) = parent[newEnd]
+        backSol.append(move)
+        newEnd = pos
+    backSol.reverse()
     return solution
 
 #     if start == end:
