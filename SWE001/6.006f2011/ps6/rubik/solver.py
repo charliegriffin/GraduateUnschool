@@ -30,11 +30,10 @@ def shortest_path(start, end):
         i += 1
     newEnd = end
     for i in range(level[end]):
-         solution.append(parent[end][1])
-         newEnd = solution[-1]
-    print solution
-    soultion = reversed(solution)
-    print solution
+         (pos,move) = parent[newEnd]
+         solution.append(move)
+         newEnd = pos
+    solution.reverse()# = reversed(solution)
     return solution
 
 #     if start == end:

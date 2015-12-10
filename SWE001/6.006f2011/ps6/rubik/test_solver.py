@@ -5,20 +5,20 @@ import rubik
 import sys
 
 class TestSolver(unittest.TestCase):
-    def testShortestPath0(self):
-        """Length 0 path."""
-        start = rubik.I
-        end = rubik.I
-        ans = solver.shortest_path(start, end)
-        self.assertEqual(len(ans), 0)
-
-    def testShortestPath1(self):
-        """Length 1 path."""
-        start = rubik.I
-        end = rubik.perm_apply(rubik.F, start)
-        ans = solver.shortest_path(start, end)
-        self.assertEqual(len(ans), 1)
-        self.assertEqual(ans, [rubik.F])
+#     def testShortestPath0(self):
+#         """Length 0 path."""
+#         start = rubik.I
+#         end = rubik.I
+#         ans = solver.shortest_path(start, end)
+#         self.assertEqual(len(ans), 0)
+# 
+#     def testShortestPath1(self):
+#         """Length 1 path."""
+#         start = rubik.I
+#         end = rubik.perm_apply(rubik.F, start)
+#         ans = solver.shortest_path(start, end)
+#         self.assertEqual(len(ans), 1)
+#         self.assertEqual(ans, [rubik.F])
 
     def testShortestPath2(self):
         """Length 2 path."""
