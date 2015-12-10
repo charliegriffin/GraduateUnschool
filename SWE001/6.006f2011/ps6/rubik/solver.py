@@ -44,13 +44,7 @@ def shortest_path(start, end):
         i += 1
     if not connected:      # we have explored all options and found no solution
         return None
-    minDistance = 15
-    # find the path with the minimum distance
-    for conn in connections:
-        distance = level[conn] + backLevel[conn]
-        if distance < minDistance:
-            minConn = conn
-            minDistance = distance
+    minConn = findShortestPath(connections,level,backLevel)
     # join the partial solutions
     newCenter = minConn
     for i in range(level[minConn]):
@@ -64,3 +58,12 @@ def shortest_path(start, end):
         solution.append(move)
         newCenter = pos
     return solution
+
+def findShortestPath(connections,level,backLevel):
+    minDistance = 15 # this serves as an infinity
+    for conn in connections:
+        distance = level[conn] + backLevel[conn]
+        if distance < minDistance:
+            minConn = conn
+            minDistance = distance
+    return minConn
