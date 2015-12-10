@@ -5,20 +5,20 @@ import rubik
 import sys
 
 class TestSolver(unittest.TestCase):
-#     def testShortestPath0(self):
-#         """Length 0 path."""
-#         start = rubik.I
-#         end = rubik.I
-#         ans = solver.shortest_path(start, end)
-#         self.assertEqual(len(ans), 0)
-# 
-#     def testShortestPath1(self):
-#         """Length 1 path."""
-#         start = rubik.I
-#         end = rubik.perm_apply(rubik.F, start)
-#         ans = solver.shortest_path(start, end)
-#         self.assertEqual(len(ans), 1)
-#         self.assertEqual(ans, [rubik.F])
+    def testShortestPath0(self):
+        """Length 0 path."""
+        start = rubik.I
+        end = rubik.I
+        ans = solver.shortest_path(start, end)
+        self.assertEqual(len(ans), 0)
+
+    def testShortestPath1(self):
+        """Length 1 path."""
+        start = rubik.I
+        end = rubik.perm_apply(rubik.F, start)
+        ans = solver.shortest_path(start, end)
+        self.assertEqual(len(ans), 1)
+        self.assertEqual(ans, [rubik.F])
 
     def testShortestPath2(self):
         """Length 2 path."""
@@ -29,26 +29,26 @@ class TestSolver(unittest.TestCase):
         self.assertEqual(len(ans), 2)
         self.assertEqual(ans, [rubik.F, rubik.L])
 
-#     def testShortestPath3(self):
-#         """Length 3 path."""
-#         start = rubik.I
-#         middle1 = rubik.perm_apply(rubik.F, start)
-#         middle2 = rubik.perm_apply(rubik.F, middle1)
-#         end = rubik.perm_apply(rubik.Li, middle2)
-#         ans = solver.shortest_path(start, end)
-#         self.assertEqual(len(ans), 3)
-#         self.assertGoodPath(start, end, ans)
-# 
-#     def testShortestPath4(self):
-#         """Length 4 path."""
-#         start = rubik.I
-#         middle1 = rubik.perm_apply(rubik.F, start)
-#         middle2 = rubik.perm_apply(rubik.L, middle1)
-#         middle3 = rubik.perm_apply(rubik.F, middle2)
-#         end = rubik.perm_apply(rubik.L, middle3)
-#         ans = solver.shortest_path(start, end)
-#         self.assertEqual(len(ans), 4)
-#         self.assertGoodPath(start, end, ans)
+    def testShortestPath3(self):
+        """Length 3 path."""
+        start = rubik.I
+        middle1 = rubik.perm_apply(rubik.F, start)
+        middle2 = rubik.perm_apply(rubik.F, middle1)
+        end = rubik.perm_apply(rubik.Li, middle2)
+        ans = solver.shortest_path(start, end)
+        self.assertEqual(len(ans), 3)
+        self.assertGoodPath(start, end, ans)
+
+    def testShortestPath4(self):
+        """Length 4 path."""
+        start = rubik.I
+        middle1 = rubik.perm_apply(rubik.F, start)
+        middle2 = rubik.perm_apply(rubik.L, middle1)
+        middle3 = rubik.perm_apply(rubik.F, middle2)
+        end = rubik.perm_apply(rubik.L, middle3)
+        ans = solver.shortest_path(start, end)
+        self.assertEqual(len(ans), 4)
+        self.assertGoodPath(start, end, ans)
 # 
 #     def testshortestPath14(self):
 #         """Length 14 path."""
@@ -65,11 +65,11 @@ class TestSolver(unittest.TestCase):
 #         ans = solver.shortest_path(start, end)
 #         self.assertEqual(ans, None)
 # 
-#     def assertGoodPath(self, start, end, path):
-#         current = start
-#         for move in path:
-#             current = rubik.perm_apply(move, current)
-#         self.assertEqual(current, end)
+    def assertGoodPath(self, start, end, path):
+        current = start
+        for move in path:
+            current = rubik.perm_apply(move, current)
+        self.assertEqual(current, end)
 
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(TestSolver)
