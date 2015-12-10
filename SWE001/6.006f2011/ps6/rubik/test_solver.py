@@ -49,22 +49,22 @@ class TestSolver(unittest.TestCase):
         ans = solver.shortest_path(start, end)
         self.assertEqual(len(ans), 4)
         self.assertGoodPath(start, end, ans)
-# 
-#     def testshortestPath14(self):
-#         """Length 14 path."""
-#         start = (6, 7, 8, 20, 18, 19, 3, 4, 5, 16, 17, 15, 0, 1, 2, 14, 12, 13, 10, 11, 9, 21, 22, 23)
-#         end = rubik.I
-#         ans = solver.shortest_path(start, end)
-#         self.assertEqual(len(ans), 14)
-#         self.assertGoodPath(start, end, ans)
-# 
-#     def testshortestPathBad(self):
-#         """No solution."""
-#         start = (7, 8, 6, 20, 18, 19, 3, 4, 5, 16, 17, 15, 0, 1, 2, 14, 12, 13, 10, 11, 9, 21, 22, 23)
-#         end = rubik.I
-#         ans = solver.shortest_path(start, end)
-#         self.assertEqual(ans, None)
-# 
+
+    def testshortestPath14(self):
+        """Length 14 path."""
+        start = (6, 7, 8, 20, 18, 19, 3, 4, 5, 16, 17, 15, 0, 1, 2, 14, 12, 13, 10, 11, 9, 21, 22, 23)
+        end = rubik.I
+        ans = solver.shortest_path(start, end)
+        self.assertEqual(len(ans), 14)
+        self.assertGoodPath(start, end, ans)
+
+    def testshortestPathBad(self):
+        """No solution."""
+        start = (7, 8, 6, 20, 18, 19, 3, 4, 5, 16, 17, 15, 0, 1, 2, 14, 12, 13, 10, 11, 9, 21, 22, 23)
+        end = rubik.I
+        ans = solver.shortest_path(start, end)
+        self.assertEqual(ans, None)
+
     def assertGoodPath(self, start, end, path):
         current = start
         for move in path:

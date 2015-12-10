@@ -42,7 +42,8 @@ def shortest_path(start, end):
                 connected = True
                 connections.append(config)
         i += 1
-    
+    if not connected:      # we have explored all options and found no solution
+        return None
     minDistance = 15
     # find the path with the minimum distance
     for conn in connections:
@@ -62,21 +63,4 @@ def shortest_path(start, end):
         (pos,move) = backParent[newCenter]
         solution.append(move)
         newCenter = pos
-    
- #    newEnd = end
-#     for i in range(level[end]):
-#          (pos,move) = parent[newEnd]
-#          solution.append(move)
-#          newEnd = pos
-#     solution.reverse()# = reversed(solution)
-#     backSol = []
-#     newEnd = end
-#     for i in range(backLevel[start]):
-#         (pos,move) = parent[newEnd]
-#         backSol.append(move)
-#         newEnd = pos
-#     backSol.reverse()
     return solution
-
-#     if start == end:
-#     	return solution
