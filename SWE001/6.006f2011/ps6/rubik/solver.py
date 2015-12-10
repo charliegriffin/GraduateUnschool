@@ -16,16 +16,14 @@ def shortest_path(start, end):
     frontier = [start]
     solution = []
     backFrontier = [end]
-    while end not in level:              # explore graph
-#         print frontier
+    connected = False
+    connections = []
+    while (not connected) and (i <= 7):              # explore graph
         next = []
         for u in frontier:
             for move in rubik.quarter_twists:
                 v = rubik.perm_apply(move,u)
-                if v == end:
-                	print 'found a solution\t length =',i
                 if v not in level:
-#                     print 'currentPos = ',currentPos
                     level[v] = i
                     parent[v] = (u,move)
                     next.append(v)
@@ -36,23 +34,48 @@ def shortest_path(start, end):
                 v = rubik.perm_apply(move,u)
                 if v not in backLevel:
                     backLevel[v] = i
-                    backParent[u] = (v,rubik.perm_inverse(move))
+                    backParent[v] = (u,rubik.perm_inverse(move))
                     backNext.append(v)
         backFrontier = backNext
+        for config in level.keys():
+            if config in backLevel:
+                connected = True
+                connections.append(config)
         i += 1
-    newEnd = end
-    for i in range(level[end]):
-         (pos,move) = parent[newEnd]
-         solution.append(move)
-         newEnd = pos
-    solution.reverse()# = reversed(solution)
-    backSol = []
-    newEnd = end
-    for i in range(backLevel[start]):
-        (pos,move) = parent[newEnd]
-        backSol.append(move)
-        newEnd = pos
-    backSol.reverse()
+    
+    minDistance = 15
+    # find the path with the minimum distance
+    for conn in connections:
+        distance = level[conn] + backLevel[conn]
+        if distance < minDistance:
+            minConn = conn
+            minDistance = distance
+    # join the partial solutions
+    newCenter = minConn
+    for i in range(level[minConn]):
+        (pos,move) = parent[newCenter]
+        solution.append(move)
+        newCenter = pos
+    solution.reverse()
+    newCenter = minConn
+    for i in range(backLevel[minConn]):
+        (pos,move) = backParent[newCenter]
+        solution.append(move)
+        newCenter = pos
+    
+ #    newEnd = end
+#     for i in range(level[end]):
+#          (pos,move) = parent[newEnd]
+#          solution.append(move)
+#          newEnd = pos
+#     solution.reverse()# = reversed(solution)
+#     backSol = []
+#     newEnd = end
+#     for i in range(backLevel[start]):
+#         (pos,move) = parent[newEnd]
+#         backSol.append(move)
+#         newEnd = pos
+#     backSol.reverse()
     return solution
 
 #     if start == end:
