@@ -195,7 +195,35 @@ class PathFinder(object):
             A tuple: (the path as a list of nodes from source to destination, 
                       the number of visited nodes)
         """
-        return NotImplemented 
+#         initialize
+        for node in nodes:
+           node.parent = None
+           node.queueKey = None
+           node.pizza = False
+        
+        numVisited = 0
+            
+            
+        print '\n'
+        print nodes[0].queueKey
+        print nodes[0].parent
+        path = []
+        queue = PriorityQueue()
+        print 'queue =',queue
+        print 'nodes[0] =',nodes[0]
+        ndp = NodeDistancePair(nodes[0],distance())
+        print ndp
+        print distance(source,destination)
+        
+#         Initialize()
+#         S = []
+#         Q <- V[G]
+#         while Q != []:
+#             do u in Extract_Min(Q) (stop if u = t)
+#         S = S U {u}
+#             for each vertex in v adjacent to u
+#                 do Relax(u,v,w)
+        return (path,len(path))
         
     @staticmethod
     def from_file(file, network):

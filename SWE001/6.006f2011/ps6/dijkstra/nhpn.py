@@ -4,6 +4,9 @@
 # Modified: Michael Lieberman
 # Date:   04/03/2008
 
+# Modified: Charlie Griffin
+# Date:   01/25/2016
+
 """Defines Python classes corresponding to nodes and edges in the
 National Highway Planning Network (NHPN) database. Also provides a
 way to load such objects from files."""
