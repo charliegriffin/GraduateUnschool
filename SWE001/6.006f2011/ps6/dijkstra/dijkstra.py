@@ -199,21 +199,56 @@ class PathFinder(object):
         for node in nodes:
            node.parent = None
            node.queueKey = None
-           node.pizza = False
         
         numVisited = 0
-            
-            
-        print '\n'
-        print nodes[0].queueKey
-        print nodes[0].parent
-        path = []
+        
         queue = PriorityQueue()
-        print 'queue =',queue
-        print 'nodes[0] =',nodes[0]
-        ndp = NodeDistancePair(nodes[0],distance())
-        print ndp
-        print distance(source,destination)
+        
+        source.queueKey = NodeDistancePair(source,0)
+        queue.insert(source.queueKey)
+        
+#         print source.queueKey.distance
+        
+        while len(queue) > 0:
+            nodeKey = queue.extract_min()
+#             print 'nodeKey =',nodeKey
+            node, dist = nodeKey.node, nodeKey.distance
+#             print 'node =',node,'distance =',dist
+            numVisited += 1
+#             print 'numVisisted = ',numVisited
+            if node == destination:
+                break
+            for nextNode in node.adj:			# relax
+#                 print type(dist),type(weight(node,nextNode))
+#                 print dist, weight(node,nextNode)
+                nextDist = weight(node,nextNode) + dist
+                if nextNode.queueKey == None:
+                    nextNode.queueKey = NodeDistancePair(nextNode,nextDist)
+                    queue.insert(nextNode.queueKey)
+                    nextNode.parent = node
+                elif nextNode.queueKey.distance > nextDist:
+                    nextNode.queueKey.distance = nextDist
+                    queue.decrease_key(nextNode.queueKey)
+                    nextNode.parent = node
+            
+        path = []
+        location = destination
+        while location != None:
+#             print path
+            path.append(location)
+            location = location.parent
+        path = list(reversed(path))
+#         print path
+#         print '\n'
+#         print nodes[0].queueKey
+#         print nodes[0].parent
+#         path = []
+#         queue = PriorityQueue()
+#         print 'queue =',queue
+#         print 'nodes[0] =',nodes[0]
+#         ndp = NodeDistancePair(nodes[0],distance())
+#         print ndp
+#         print distance(source,destination)
         
 #         Initialize()
 #         S = []
@@ -223,7 +258,7 @@ class PathFinder(object):
 #         S = S U {u}
 #             for each vertex in v adjacent to u
 #                 do Relax(u,v,w)
-        return (path,len(path))
+        return (path,numVisited)
         
     @staticmethod
     def from_file(file, network):
