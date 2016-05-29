@@ -18,4 +18,57 @@ def test():
     print "is 181 Prime?",primeNaive(181),"should be True"
     print "is 493 Prime?",primeNaive(493),"should be False"
     
-test()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def printPrimes():
+    primes = []
+    for i in range(2,10000):
+        for j in range(2,i):
+            if i%j == 0:  # is divisible
+                break
+            if j == i-1:
+                print i
+        
+        
+printPrimes()
+        
