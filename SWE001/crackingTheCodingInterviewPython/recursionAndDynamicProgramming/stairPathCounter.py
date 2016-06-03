@@ -10,8 +10,9 @@ def numWays(n): #counts the number of ways one can go up n stairs if
 
 map = [-2 for i in range(max)]
 
-# needed guidance for this one    
-def numWaysDP(n,map):
+def numWaysDP(n,map):        '''counts the number of ways one can go up n stairs
+                             if they have the option of taking 1, 2, or 3 stairs 
+                             at a time'''
     if (n<0): return 0
     elif (n==0): return 1
     elif (map[n] > -1): return map[n]
