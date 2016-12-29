@@ -33,80 +33,81 @@ None.
 
 \newcommand{\answerIa}{ \answer
 %%% PROBLEM 1(a) ANSWER START %%%
-0
+3. The for loop's run time is $\Theta(N)$.
 %%% PROBLEM 1(a) ANSWER END %%%
 }
 
 \newcommand{\answerIb}{ \answer
 %%% PROBLEM 1(b) ANSWER START %%%
-0
+3. The for loop is the first N digits ([N+1] is the N+1th digit).
 %%% PROBLEM 1(b) ANSWER END %%%
 }
 
 \newcommand{\answerIc}{ \answer
 %%% PROBLEM 1(c) ANSWER START %%%
-0
+Yes.
+\\runtime $\approx$ output size $\implies$ algorithm is optimal
 %%% PROBLEM 1(c) ANSWER END %%%
 }
 
 \newcommand{\answerId}{ \answer
 %%% PROBLEM 1(d) ANSWER START %%%
-0
+4. $\Theta(N^2)$ from the $\Theta(N)$ loop embedded within the $\Theta(N)$ loop.
 %%% PROBLEM 1(d) ANSWER END %%%
 }
 \newcommand{\answerIe}{ \answer
 %%% PROBLEM 1(e) ANSWER START %%%
-0
+3. The number is 2N digits, so $\Theta(N)$.
 %%% PROBLEM 1(e) ANSWER END %%%
 }
 \newcommand{\answerIf}{ \answer
 %%% PROBLEM 1(f) ANSWER START %%%
-0
+No. $\Theta(N^2) > \Theta(2N)$
 %%% PROBLEM 1(f) ANSWER END %%%
 }
 \newcommand{\answerIg}{ \answer
 %%% PROBLEM 1(g) ANSWER START %%%
-0
+3. $\Theta(N)$. In the worst case each (corresponding) digit will be compared.
 %%% PROBLEM 1(g) ANSWER END %%%
 }
 \newcommand{\answerIh}{ \answer
 %%% PROBLEM 1(h) ANSWER START %%%
-0
+3. $\Theta(N)$. Same as add.
 %%% PROBLEM 1(h) ANSWER END %%%
 }
 \newcommand{\answerIi}{ \answer
 %%% PROBLEM 1(i) ANSWER START %%%
-0
+4. $\Theta(N^2)$. The until loop runs $\Theta(N)$ times, and takes $\Theta(N)$ time (add) to run. So does the for loop.
 %%% PROBLEM 1(i) ANSWER END %%%
 }
 \newcommand{\answerIj}{ \answer
 %%% PROBLEM 1(j) ANSWER START %%%
-0
+2. $\Theta(\log(N))$ since $\epsilon_{n+1} = -\epsilon_i^2 \propto \epsilon_n^2$. Quadratic convergence, number of correct digits doubles each step (lecture 12 notes). So for N digit numbers it will take $\log_2(N)$ steps.
 %%% PROBLEM 1(j) ANSWER END %%%
 }
 \newcommand{\answerIk}{ \answer
 %%% PROBLEM 1(k) ANSWER START %%%
-0
+4. $\Theta\left(N^2\right)$. From page 3 of lecture 12: Complexity of division = complexity of multiplication.
 %%% PROBLEM 1(k) ANSWER END %%%
 }
 \newcommand{\answerIl}{ \answer
 %%% PROBLEM 1(l) ANSWER START %%%
-0
+8. $\Theta\left(N^3\right)$. The for loop runs N times, and inside it the MOD(MULTIPLY()) line is $\Theta\left(N^2\right)$.
 %%% PROBLEM 1(l) ANSWER END %%%
 }
 \newcommand{\answerIm}{ \answer
 %%% PROBLEM 1(m) ANSWER START %%%
-0
+6. $\Theta\left(N^{\log_2(3)}\right)$. For Karatsuba's algorithm Multiply goes from $\Theta\left(N^2\right) \to \Theta\left(N^{log_2(3)}\right)$ (so does Mod).
 %%% PROBLEM 1(m) ANSWER END %%%
 }
 \newcommand{\answerIn}{ \answer
 %%% PROBLEM 1(n) ANSWER START %%%
-0
+6. $\Theta\left(N^{\log_2(3)}\right)$. It should be the same as multiply. 
 %%% PROBLEM 1(n) ANSWER END %%%
 }
 \newcommand{\answerIo}{ \answer
 %%% PROBLEM 1(o) ANSWER START %%%
-0
+7. $\Theta(N) \times \Theta\left(N^{\log_2(3)}\right) = \Theta\left(N^{1+\log_2(3)}\right) = \Theta\left(N^{\log_2(2\times3)}\right)=\Theta\left(N^{\log_2(6)}\right)$
 %%% PROBLEM 1(o) ANSWER END %%%
 }
 \newcommand{\answerIp}{ \answer
@@ -117,63 +118,80 @@ Your pseudo-code in latex.
 
 \newcommand{\answerIIa}{ \answer
 %%% PROBLEM 2(a) ANSWER START %%%
-0
+7. $\Theta\left(N^{\log_2(6)}\right)$. It just calls PowMod.
 %%% PROBLEM 2(a) ANSWER END %%%
 }
 \newcommand{\answerIIb}{ \answer
 %%% PROBLEM 2(b) ANSWER START %%%
-0
+3. $\Theta\left(\frac{RC}{N}\right)$. The $\Theta(RC)$ pixels are encrypted in groups of $N - 1\to\Theta(N)$.
 %%% PROBLEM 2(b) ANSWER END %%%
 }
 \newcommand{\answerIIc}{ \answer
 %%% PROBLEM 2(c) ANSWER START %%%
-0
+9. $\Theta\left(RCN^{\log_2(3)}\right)$. $D(n)$runtime$\times$num calls to $D(n)=\Theta\left(N^{\log_2(6)}\right)\Theta\left(\frac{RC}{N}\right) = \Theta\left(RCN^{\log_2(3)}\right)$
 %%% PROBLEM 2(c) ANSWER END %%%
 }
 \newcommand{\answerIId}{ \answer
 %%% PROBLEM 2(d) ANSWER START %%%
-0
+0, 1, and $m-1$ are fixed points under RSA, the rest aren't.\\
+$E(n) \equiv n $mod$m\implies n^e$mod$m= n$mod$m$\\
+$\left(m-1\right)^e$mod$m=(-1\times$mod$m)^e=-1=(m-1)$mod$m$ (if $e$ is odd, which it is).
 %%% PROBLEM 2(d) ANSWER END %%%
 }
 \newcommand{\answerIIe}{ \answer
 %%% PROBLEM 2(e) ANSWER START %%%
-0
+1. True $E(-n)\equiv -E(n) \mod m$ since $E(-n) = (-n)^e \mod m = -(n^e \mod m) = -E(n) \mod m$.\\
+2. False. $E(n_1) + E(n_2) = n_1^e+n_2^e \neq \left(n_1+n_2\right)^e \mod m.$\\
+3. False, following the same logic as 2.\\
+4. True. $E(n_1)E(n_2) = n_1^e \mod (m)n_2^e \mod m=n_1n_2^e (\mod m)^2 = E(n_1n_2) \mod m$\\
+5. True. $E(n_1)^{n_2} = (n_1^e \mod m)^{n_2} = (n_1^{en_2} \mod m)^{\mod m} = E(n_1^{n_2}) \mod m.$
 %%% PROBLEM 2(e) ANSWER END %%%
 }
 \newcommand{\answerIIf}{ \answer
 %%% PROBLEM 2(f) ANSWER START %%%
-0
+1. False. The message only changes once.\\
+2. True. It changes the no's from day to day.\\
+3. True. Same reason as 2.\\
+4. False. It will still change only once.\\
+5. False. Same reasons as 1 and 4.
 %%% PROBLEM 2(f) ANSWER END %%%
 }
 
 \newcommand{\answerIIIa}{ \answer 
 %%% PROBLEM 3(a) ANSWER START %%%
-method\_name
+fast\_mul since \_\_add\_\_ is already optimized.
 %%% PROBLEM 3(a) ANSWER END %%%
 }
 \newcommand{\answerIIIb}{ \answer
 %%% PROBLEM 3(b) ANSWER START %%%
-0
+93496
 %%% PROBLEM 3(b) ANSWER END %%%
 }
 \newcommand{\answerIIIc}{ \answer
 %%% PROBLEM 3(c) ANSWER START %%%
-0
+$\Theta\left(n^{\log_2(3)}\right)$\\
+Comparing the code to lecture 11 page 5, it is very clear that Karatsuba's Method is being used. For reference self\_high = $x_0$, other\_high = $y_0$, result\_high = $z_1$,...
 %%% PROBLEM 3(c) ANSWER END %%%
 }
 \newcommand{\answerIIId}{ \answer
 %%% PROBLEM 3(d) ANSWER START %%%
-0
+Newton's method is used, so the run time matches that of multiplication: $\Theta\left(n^{\log_2(3)}\right)$
 %%% PROBLEM 3(d) ANSWER END %%%
 }
 \newcommand{\answerIIIe}{ \answer
 %%% PROBLEM 3(e) ANSWER START %%%
-0
+1. True. You can tell from the black areas.\\
+2. True. It still has a face (not probabilistic).\\
+3. True. MIT is readable encrypted.\\
+4. False. Fuzzy edges\\
+5. False. Looks like noise.\\
+6. False. Looks like noise.\\
+5future\_1024 runs very slow (hours).
 %%% PROBLEM 3(e) ANSWER END %%%
 }
 \newcommand{\answerIIIf}{ \answer
 %%% PROBLEM 3(f) ANSWER START %%%
-0
+$\Theta(1)$, it is chunked in the 'while $i<$len(hex\_string):' loop in decrypt.
 %%% PROBLEM 3(f) ANSWER END %%%
 }
 
