@@ -112,7 +112,80 @@ No. $\Theta(N^2) > \Theta(2N)$
 }
 \newcommand{\answerIp}{ \answer
 %%% PROBLEM 1(p) ANSWER START %%%
-Your pseudo-code in latex.
+\begin{codebox}
+\Procname{$\proc{KthRoot}(A, K, N)$}
+\li $T_0 \gets \proc{One}(N)$ \Comment{$T_i = 2^i$}
+\li $i \gets 0$ \Comment{Modeled after DivMod}
+\li \Repeat \label{li:divmod-repeat}
+\li   $i \gets i + 1$
+\li   $\id{S_i} \gets \proc{Add}(\id{T_{i - 1}}, \id{T_{i - 1}}, N)$
+\li \Until $\id{T_i}[N + 1] > 0$ or $\proc{PowExceeds}(T_i, K, A, N)$ \Comment{True if $T_i^K > A$}
+\li $R \gets \proc{Zero}(N)$ \Comment{binary search on $R$ bit by bit}
+\li \For $j \gets i - 1$ \Downto $0$ \label{li:divmod-for}
+\li   \Do
+        $Q' \gets \proc{Add}(R, T_j, N)$
+\li     \If $\proc{PowExceeds}(T_i, K, A, N) \isnotequal \const{True}$
+\li     \Then
+           $R \gets R'$ \Comment{R is low in this implementation to ensure floor is returned}
+        \End
+      \End
+\li \Return $(R)$
+\end{codebox}
+
+\begin{codebox}
+\Procname{$\proc{PowExceeds}(B, E, A, N)$}
+\li $A2 \gets \proc{Zero}(2N)$ \Comment{$A$, zero extended $2N$ digits}
+\li \For $i \gets 1$ \To $N$ \label{li:exp-for1}
+\li   \Do
+        $A2[i] \gets A[i]$
+      \End
+\li $\id{ones} = 0$ \Comment{Modeled after PowMod, num set bits in E}
+\li \For $i \gets 1$ \To $N$ \label{li:exp-for1}
+\li   \Do
+        $\id{mask} \gets 1$
+\li     \For $\id{bit} \gets 1$ \To $8$ \label{li:exp-for2}
+\li       \Do
+            \If $E[i] \textrm{ \& } \id{mask} \isnotequal 0$
+\li         \Then
+              $\id{ones} = \id{ones} + 1$
+              \label{li:exp-mulmod1}
+            \End
+\li         $\id{mask} \gets \proc{Lsb}(\id{mask} \cdot 2)$
+          \End
+      \End
+\li $R \gets \proc{One}(N)$ \Comment{modeled after PowMod}
+\li $X \gets \proc{Copy}(B, N)$ \Comment{multiplier}
+\li \For $i \gets 1$ \To $N$ \label{li:exp-for1}
+\li   \Do
+        $\id{mask} \gets 1$
+\li     \For $\id{bit} \gets 1$ \To $8$ \label{li:exp-for2}
+\li       \Do
+            \If $E[i] \textrm{ \& } \id{mask} \isnotequal 0$
+\li         \Then
+              $R \gets \proc{Multiply}(R, X, N)$
+              \label{li:exp-mulmod1}
+\li           \If $\proc{Cmp}(R,A2,N) \isequal $ GREATER
+\li           \Then
+                  \Return True
+              \End
+\li           $\id{ones} \gets \id{ones} - 1$ \Comment{ones counts remaining bits}
+\li           \If $\id{ones} \isequal 0$
+\li           \Then
+                \Return False
+              \End
+            \End
+\li         $X \gets \proc{Multiply}(X, X, N)$
+            \label{li:exp-mulmod2}
+\li         \If $\proc{Cmp}(X,2A,N) \isequal $ GREATER
+\li         \Then
+              \Return True
+            \End
+\li         $\id{mask} \gets \proc{Lsb}(\id{mask} \cdot 2)$
+          \End
+      \End
+\li \Return $R$
+\end{codebox}
+
 %%% PROBLEM 1(p) ANSWER END %%%
 }
 
